@@ -19,6 +19,7 @@ export class QuesEntryFormComponent implements OnInit {
   key:any=0;
   Qoption:any=[];
   FormGroup:FormGroup;
+  display:'none';
   
 
   EventsHasError = true;
@@ -26,10 +27,12 @@ export class QuesEntryFormComponent implements OnInit {
   _form = {
     key: 0,
     title: '',
-    questype: '',
-    option:'',
-    option1:'',
-    optionsArray:[]
+    optText:'',
+    isCorrect:'',
+    optionsArray:[{
+    optText:'',
+    isCorrect:'',
+    }]
   }
 
   constructor(private questionService:QuesService,private _fb:FormBuilder) { 
@@ -57,10 +60,10 @@ export class QuesEntryFormComponent implements OnInit {
 
   Add(){
     console.log("One more option Added")
-    this._form.optionsArray.push({"optText":"","isCorrect":""})
+    // this._form.optionsArray.push({"optText":"","isCorrect":""})
     // this._form.option
     
-    // this._form.optionsArray.push({option:this._form.option,isCorrect:this._form.option1})
+    this._form.optionsArray.push({optText:this._form.optText,isCorrect:this._form.isCorrect})
   }
 
   Remove()
@@ -80,8 +83,8 @@ export class QuesEntryFormComponent implements OnInit {
 
 
 
-  OnSubmit(form: NgForm) {
-    console.log(form.value);
+  OnSubmit() {
+    console.log(this._form);
     
     // this.questionService.addQuestions(form.value)
     // .subscribe((data)=>{
@@ -97,7 +100,10 @@ export class QuesEntryFormComponent implements OnInit {
     console.log(options);
   }
 
-
+  closeModalDialog(){
+    console.log("it been closed");
+    this.display="none";
+  }
 
 
   // resetForm(form?: NgForm) {

@@ -7,7 +7,7 @@
 <h5>Added Questions</h5>
 
 <div>
-  <button><a Link="../ques-entry-form">+ADD QUESTIONS</a></button>
+  <button (click)="openModalDialog()"><span area-hidden="true"></span>+ADD QUESTIONS</button>
 </div>
 <br>
 <div class="container">
@@ -18,11 +18,13 @@
             <th>Title</th>
             <th>Type</th>
             <th>Options</th>
+            <th>Actions</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           <tr>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -32,10 +34,11 @@
         </tbody>
       </table>
 </div> 
+
 <!-- 
 <div *ngIf="true">
   <app-ques-entry-form></app-ques-entry-form>
-  </div> -->
+  </div>  -->
 
 
  

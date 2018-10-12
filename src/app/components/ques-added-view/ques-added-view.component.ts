@@ -14,6 +14,7 @@ import {QuesEntryFormComponent} from '../ques-entry-form/ques-entry-form.compone
 
 export class QuesAddedViewComponent implements OnInit {
   
+display="none";
 
   constructor( ) {
      
@@ -24,20 +25,15 @@ export class QuesAddedViewComponent implements OnInit {
   }
 
 
-
-
-  // addQuestions(form: NgForm) {
-  //   console.log(form.value);
-  //   this.questionService.addQuestions(form.value)
-  //     .subscribe((data) => {
-  //       console.log(data);
-  //     })
-  //   // alert(form.value.commonevents + ' has been added');
-  //   // this.resetForm(form);
-
-  // }
+  openModalDialog(){
+    console.log("Modal is working");
+    this.display="Block";
+  }
   
-  
+  closeModalDialog(){
+    console.log("it been closed");
+    this.display="none";
+  }
 
   // EditQuestions(form: NgForm) {
   //   console.log(form.value);
