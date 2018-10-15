@@ -18,16 +18,18 @@
             <th>Title</th>
             <th>Type</th>
             <th>Options</th>
+            <th>Answers</th>
             <th>Actions</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+          <tr *ngFor="let qset of quesset">
+            <td>{{qset.key}}</td>
+            <td>{{qset.title}}</td>
+            <td>{{qset.type}}</td>
+            <td>{{qset.options}}</td>
+            <td>{{qset.checkbox}}</td>
             <td><button>EDIT</button></td>
             <td><button>DELETE</button></td>
           </tr>

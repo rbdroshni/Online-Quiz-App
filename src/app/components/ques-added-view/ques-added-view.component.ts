@@ -4,6 +4,9 @@ import {RouterModule,Routes} from '@angular/router';
 import {NgForm} from '@angular/forms'
 import {QuesEntryFormComponent} from '../ques-entry-form/ques-entry-form.component';
 // import { QuesService } from '../questions-service/ques.service';
+import {QuesService} from '../questions-service/ques.service';
+import {QuestionType} from '../questions-service/questions.model';
+import {QuesSet} from './questionset' 
 
 
 @Component({
@@ -13,12 +16,11 @@ import {QuesEntryFormComponent} from '../ques-entry-form/ques-entry-form.compone
 })
 
 export class QuesAddedViewComponent implements OnInit {
+  quesset=QuesSet;
   
 display="none";
 
   constructor( ) {
-     
-  
   }
 
   ngOnInit() {
@@ -55,6 +57,5 @@ display="none";
   //     })
   //   }
   // }
-
 
 }

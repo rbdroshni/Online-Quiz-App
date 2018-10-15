@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 // import { Options } from 'selenium-webdriver/opera';
 import {Http} from '@angular/http';
 import { NgForm } from '@angular/forms';
-import {FormGroup,FormBuilder,FormArray,FormControl,Validators} from '@angular/forms';
+import { FormGroup,FormBuilder,FormArray,FormControl,Validators } from '@angular/forms';
 import { QuesService } from '../questions-service/ques.service';
 
-import {QuestionType} from '../questions-service/questions.model'
+import { QuestionType } from '../questions-service/questions.model'
 
 @Component({
   selector: 'app-ques-entry-form',
