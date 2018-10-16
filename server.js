@@ -15,8 +15,18 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json())
 
 app.get('/',(req,res)=>{
-res.json({"message":"WElcome to my online quiz app"});
+res.json({"message":"Welcome to my online quiz app"});
 })
+
+
+require('./app/routes/quiz.routes')(app);
+
+
+app.listen(3000,()=>{
+    console.log("Server is listening on port 3000");
+})
+
+
 
 mongoose.connect(dbConfig.url, {
     useNewUrlParser: true
@@ -27,9 +37,7 @@ mongoose.connect(dbConfig.url, {
     process.exit();
 });
 
-app.listen(3000,()=>{
-    console.log("Server is listening on port 3000");
-})
+
 
 
 

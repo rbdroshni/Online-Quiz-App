@@ -1,5 +1,5 @@
 module.exports=(app)=>{
-    const quizes=require('../controlers/quiz.controller.js')
+    const quizes=require('../controllers/quiz.controller')
 
     // Create a new quiz
     app.post('/quizes',quizes.create);
@@ -10,7 +10,7 @@ module.exports=(app)=>{
 
     //Update a quiz with quizId
 
-    app.put('/quizes/:quizId',quies.update);
+    app.put('/quizes/:quizId',quizes.update);
 
     //Delete a Note with noteId
     app.delete('/quizes/:quizId',quizes.delete)
