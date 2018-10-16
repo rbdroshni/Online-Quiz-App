@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule,Routes} from '@angular/router';
+import {DialogModule} from 'primeng/dialog';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { HttpModule } from '@angular/http'
 
@@ -26,7 +28,9 @@ const routes:Routes =[
     BrowserModule,
     FormsModule,
    ReactiveFormsModule,
-   HttpModule
+   HttpModule,
+   DialogModule,
+   BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

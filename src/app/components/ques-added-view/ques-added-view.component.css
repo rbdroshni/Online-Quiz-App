@@ -1,0 +1,8 @@
+#dailog-box{
+    background: gray;
+    position: absolute;
+    right: 582px;
+    top: 37px;
+    width: 372px;
+    min-height: 456px
+}

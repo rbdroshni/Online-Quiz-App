@@ -1,15 +1,18 @@
-<app-ques-entry-form></app-ques-entry-form>
 
-
-<hr/>
-<hr/>
-
-<h5>Added Questions</h5>
+<h5 > Questions Details</h5>
 
 <div>
-  <button (click)="openModalDialog()"><span area-hidden="true"></span>+ADD QUESTIONS</button>
+   <button type="text" (click)="showDialog()"  >ADD QUESTIONS</button>
+
+ <p-dialog  [(visible)]="display">
+     <span id="dailog-box">
+      <app-ques-entry-form ></app-ques-entry-form>
+      <button type="button" pButton icon="pi pi-close" (click)="display=false" label="Yes">x</button>
+     </span>
+ </p-dialog>
 </div>
 <br>
+
 <div class="container">
       <table class="table">
         <thead>
@@ -37,10 +40,6 @@
       </table>
 </div> 
 
-<!-- 
-<div *ngIf="true">
-  <app-ques-entry-form></app-ques-entry-form>
-  </div>  -->
 
 
  
