@@ -2,45 +2,44 @@
     <h3>Questions Form</h3>
     <form _form="NgForm" name="id" (ngSubmit)="OnSubmit(_form)" >
     <input type="text" name="id" hidden key="ngModel" [(ngModel)]="_form.id">
-   
      <div>
        <label>Question Title:</label>
-       <input type="text.question" placeholder="Enter Question" name="title" [(ngModel)]="_form.title">
+       <input type="text" placeholder="Enter Question" name="title" [(ngModel)]="_form.title">
     </div>
-
 
     <div>
       <label>Question Type:</label>
-      <div > 
-        <select (change)="OnClick($event.target.value)" placeholder="Select Options" name="QuesType" [(ngModel)]="_form.QuesType" >
+        <select (change)=OnClick($event.target.value) placeholder="Select Options" name="QuesType" [(ngModel)]="_form.QuesType" >
             <option value="default">Select Question Type</option>
-            <option *ngFor="let type of QuesType" value= {{type.name}} >
+            <option *ngFor="let type of QuesType;let i=index" value="{{i}}" >
             {{type.name}}
             </option>
-            Select Options
         </select> 
-      </div>
     </div>
 
-    <div> 
-          <div *ngFor="let key of _form.optionsArray,let i=index">
-            <label>Options:</label>
-            <input type="text.option1" placeholder="option" name="option1" [(ngModel)]="key.optText">
-            <input type="checkbox" name="answer1" [(ngModel)]="key.isCorrect">
+<div *ngIf="SelectedOptions">
+     <div> 
+          <div *ngFor="let key of _form.optionsArray">
+            <li>
+            <input type="text" placeholder="option" name="optText" [(ngModel)]="key.optText">
+            <input type="checkbox" name="answer" [(ngModel)]="key.isCorrect">
+            <li>
           </div> 
-   </div>
 
-    <input type="button" name="Add More" value="Add More" (click)="Add()">
-    <input type ="button" name="Remove" value="Remove option" (click)="Remove()">
-  
-  
-   <div class="form-group">
-        <input type="reset" id="reset-button" value="Reset"/>
-        <input type="submit" id="submit-button" value="Save" />
-      
-     </div>
+          
+
+          <input type="button" name="Add More" value="Add More" (click)="Add()">
+          <input type ="button" name="Remove" value="Remove option" (click)="Remove()">
+          <div class="form-group">
+            <input type="reset" id="reset-button" value="Reset"/>
+            <input type="submit" id="submit-button" value="Save" />
+         </div>
      
-  </form>
+       </div>
+   </div>
+<div *ngIf="AnotherSelectedOption||SelectedOptions" ></div> 
+        
+</form>
 
 </div>
 

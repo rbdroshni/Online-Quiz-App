@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { FormsModule,ReactiveFormsModule} from '@angular/forms'
 import { QuesEntryFormComponent } from './components/ques-entry-form/ques-entry-form.component';
 import { QuesAddedViewComponent } from './components/ques-added-view/ques-added-view.component';
+import { QuesFormComponent } from './components/ques-form/ques-form.component';
 
 
 const routes:Routes =[
@@ -23,6 +24,7 @@ const routes:Routes =[
     AppComponent,
     QuesEntryFormComponent,
     QuesAddedViewComponent,
+    QuesFormComponent,
   ],
   imports: [
     BrowserModule,

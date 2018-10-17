@@ -4,7 +4,6 @@ import {Http} from '@angular/http';
 import { NgForm } from '@angular/forms';
 import { FormGroup,FormBuilder,FormArray,FormControl,Validators } from '@angular/forms';
 import { QuesService } from '../questions-service/ques.service';
-
 import { QuestionType } from '../questions-service/questions.model'
 
 @Component({
@@ -13,29 +12,27 @@ import { QuestionType } from '../questions-service/questions.model'
   styleUrls: ['./ques-entry-form.component.css']
 })
 export class QuesEntryFormComponent implements OnInit {
-
-  Options = ["Single Options", "Multiple Options", "Input text"]
+  SelectedOptions:Boolean=false;
+  AnotherSelectedOption:Boolean=false;
   QuesType:any=[];
-  key:any=0;
-  Qoption:any=[];
-  FormGroup:FormGroup;
-  display:'none';
-  
-
   EventsHasError = true;
+  isCorrect;
+  optText;
+   
 
   _form = {
     key: 0,
     title: '',
-    optText:'',
-    isCorrect:'',
-    optionsArray:[{
-    optText:'',
-    isCorrect:'',
-    }]
+    type:'',
+    optionsArray:[
+      {
+        isCorrect:'',
+        optText:''
+      }
+    ]
   }
 
-  constructor(private questionService:QuesService,private _fb:FormBuilder) { 
+  constructor(private questionService:QuesService) { 
 
     this.QuesType=[
       {
@@ -54,16 +51,19 @@ export class QuesEntryFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._form.optionsArray.push({"optText":"","isCorrect":""})
+    this._form.optionsArray=[
+      {optText:"Roshni",isCorrect:"true"}
+    ]
   }
 
 
   Add(){
-    console.log("One more option Added")
+    console.log(this.optText+" "+this.isCorrect);
     // this._form.optionsArray.push({"optText":"","isCorrect":""})
     // this._form.option
     
-    this._form.optionsArray.push({optText:this._form.optText,isCorrect:this._form.isCorrect})
+    this._form.optionsArray.push({optText:this.optText,isCorrect:this.isCorrect})
+  
   }
 
   Remove()
@@ -97,13 +97,19 @@ export class QuesEntryFormComponent implements OnInit {
 
 
   OnClick(options) {
+
     console.log(options);
+    if((options==0)||(options==1)){
+      this.SelectedOptions=true;
+      console.log("SelectedOptions ", this.SelectedOptions);
+    } 
+    else if(options==2){
+      this.SelectedOptions=false;
+      this.AnotherSelectedOption=true;
+      console.log("AnotherSelectedOption", this.AnotherSelectedOption);
+    } 
   }
 
-  closeModalDialog(){
-    console.log("it been closed");
-    this.display="none";
-  }
 
 
   // resetForm(form?: NgForm) {

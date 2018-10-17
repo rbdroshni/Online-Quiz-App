@@ -6,6 +6,7 @@ import {QuesEntryFormComponent} from '../ques-entry-form/ques-entry-form.compone
 import {QuesService} from '../questions-service/ques.service';
 import {QuestionType} from '../questions-service/questions.model';
 import {QuesSet} from './questionset' 
+import {QuesFormComponent} from '../ques-form/ques-form.component';
 
 
 @Component({
@@ -39,6 +40,10 @@ export class QuesAddedViewComponent implements OnInit {
   //   alert(form.value.commonevents + ' has been updated');
   // }
 
+  OnUpdate(){
+    console.log("Edit is working");
+  }
+
 
 
   // deleteQuestions(form:NgForm) {
@@ -50,5 +55,9 @@ export class QuesAddedViewComponent implements OnInit {
   //     })
   //   }
   // }
+
+  OnDelete(){
+    console.log("Delete button is working");
+  }
 
 }

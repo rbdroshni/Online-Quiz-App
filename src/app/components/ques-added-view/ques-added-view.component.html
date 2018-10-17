@@ -6,8 +6,9 @@
 
  <p-dialog  [(visible)]="display">
      <span id="dailog-box">
+        <button type="button" style="float:right;" pButton icon="pi pi-close" (click)="display=false"label="Yes">x</button>
       <app-ques-entry-form ></app-ques-entry-form>
-      <button type="button" pButton icon="pi pi-close" (click)="display=false" label="Yes">x</button>
+     
      </span>
  </p-dialog>
 </div>
@@ -33,8 +34,8 @@
             <td>{{qset.type}}</td>
             <td>{{qset.options}}</td>
             <td>{{qset.checkbox}}</td>
-            <td><button>EDIT</button></td>
-            <td><button>DELETE</button></td>
+            <td><button (click)="OnUpdate()">EDIT</button></td>
+            <td><button (click)="OnDelete()">DELETE</button></td>
           </tr>
         </tbody>
       </table>
