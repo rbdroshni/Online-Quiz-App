@@ -2,6 +2,5 @@ export class QuestionType{
     public key:number;
     public title:string;
     public type:string;
-    public optionsArray:string[];
-    
+    public optionsArray:string[];   
 }
