@@ -16,18 +16,20 @@ export class QuesEntryFormComponent implements OnInit {
   AnotherSelectedOption:Boolean=false;
   QuesType:any=[];
   EventsHasError = true;
-  isCorrect;
-  optText;
+  // optionsList:any=[];
+  options;
+  answers;
+
    
 
   _form = {
-    key: 0,
+    key: '',
     title: '',
     type:'',
     optionsArray:[
       {
-        isCorrect:'',
-        optText:''
+        optText:'',
+        isCorrect:'' 
       }
     ]
   }
@@ -51,26 +53,42 @@ export class QuesEntryFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._form.optionsArray=[
-      {optText:"Roshni",isCorrect:"true"}
-    ]
+    this._form.optionsArray=[]
   }
 
 
-  Add(){
-    console.log(this.optText+" "+this.isCorrect);
-    // this._form.optionsArray.push({"optText":"","isCorrect":""})
-    // this._form.option
+  // AddOptions(){
+  //   console.log(this.optText+" "+this.isCorrect);
+  //   // this._form.optionsArray.push({"optText":"","isCorrect":""})
+  //   // this._form.option
     
-    this._form.optionsArray.push({optText:this.optText,isCorrect:this.isCorrect})
+  //   this._form.optionsArray.push({optText:this.optText,isCorrect:this.isCorrect})
+  
+  // }
+
+  AddOptions(){
+    console.log(this._form.optionsArray);
+    console.log(this.options+" "+this.answers);
+  
+    this._form.optionsArray.push({optText:this.options,isCorrect:this.answers})
   
   }
 
-  Remove()
-    {
-      console.log("last options has been removed")
-      this._form.optionsArray.pop();
+
+  DeleteOptions(optText){
+    console.log(optText);
+    for(var i=0;i<this._form.optionsArray.length;i++){
+      if(this._form.optionsArray[i]["optText"]==optText){
+        this._form.optionsArray.splice(i,1);
+      }
     }
+  }
+
+  // Remove()
+  //   {
+  //     console.log("last options has been removed")
+  //     this._form.optionsArray.pop();
+  //   }
 
 
   validateQuestions(value) {

@@ -17,27 +17,26 @@
         </select> 
     </div>
 
-<div *ngIf="SelectedOptions">
-     <div> 
-          <div *ngFor="let key of _form.optionsArray">
-            <li>
-            <input type="text" placeholder="option" name="optText" [(ngModel)]="key.optText">
-            <input type="checkbox" name="answer" [(ngModel)]="key.isCorrect">
-            <li>
-          </div> 
+   <div *ngIf="SelectedOptions">
+     <ol> 
+          <li *ngFor="let key of _form.optionsArray">
+              {{key.optText}}    {{key.isCorrect}}
+            <button (click)="DeleteOptions(key.optText)">-</button>
+          </li>
+      </ol>
+          <div >
+            <input type="text" placeholder="option" name="optText" [(ngModel)]="options">
+            <input type="checkbox" name="isCorrect" [(ngModel)]="answers">
+            <br/>
+            <input type="button" name="Add More" value="Add more" (click)="AddOptions()">
+          </div>
 
-          
-
-          <input type="button" name="Add More" value="Add More" (click)="Add()">
-          <input type ="button" name="Remove" value="Remove option" (click)="Remove()">
           <div class="form-group">
             <input type="reset" id="reset-button" value="Reset"/>
             <input type="submit" id="submit-button" value="Save" />
-         </div>
-     
-       </div>
+         </div> 
    </div>
-<div *ngIf="AnotherSelectedOption||SelectedOptions" ></div> 
+   <div *ngIf="AnotherSelectedOption||SelectedOptions" ></div> 
         
 </form>
 
