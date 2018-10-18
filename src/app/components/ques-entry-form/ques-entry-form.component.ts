@@ -20,8 +20,6 @@ export class QuesEntryFormComponent implements OnInit {
   options;
   answers;
 
-   
-
   _form = {
     key: '',
     title: '',
@@ -69,8 +67,9 @@ export class QuesEntryFormComponent implements OnInit {
   AddOptions(){
     console.log(this._form.optionsArray);
     console.log(this.options+" "+this.answers);
-  
-    this._form.optionsArray.push({optText:this.options,isCorrect:this.answers})
+    this._form.optionsArray.push({optText:this.options,isCorrect:this.answers});
+    this.options=null;
+   this.answers=null;
   
   }
 
@@ -100,28 +99,49 @@ export class QuesEntryFormComponent implements OnInit {
   }
 
 
+  resetForm(form?:NgForm){
+    if(form !=null)
+    this._form.key=null;
+    this._form.title=null;
+    this._form.type=null;
+    this.options=null;
+    this.answers=null
+    this._form.optionsArray=[
+    
+  ]
+    
 
-  OnSubmit() {
+    // this.questionService.selectedQuestionType.emit();{
+    //   key:0;
+    //   title:'';
+    //   type:'';
+    //   optionsArray:[
+    //     {optText:'',isCorrect:''}
+    //   ]
+
+    // }
+  }
+
+  OnSubmit(form:NgForm) {
     console.log(this._form);
     
-    // this.questionService.addQuestions(form.value)
+    // this.questionService.addQuestions(_form.value)
     // .subscribe((data)=>{
     //   console.log(data);
     // })
-    // alert(form.value.questype + 'question has added');
-    // this.resetForm(form);
+    alert('question has added');
+    this.resetForm(form);
   }
-
 
 
   OnClick(options) {
 
     console.log(options);
-    if((options==0)||(options==1)){
+    if((options=="Single Options")||(options=="Multiple Options")){
       this.SelectedOptions=true;
       console.log("SelectedOptions ", this.SelectedOptions);
     } 
-    else if(options==2){
+    else if(options=="input text"){
       this.SelectedOptions=false;
       this.AnotherSelectedOption=true;
       console.log("AnotherSelectedOption", this.AnotherSelectedOption);
@@ -129,19 +149,6 @@ export class QuesEntryFormComponent implements OnInit {
   }
 
 
-
-  // resetForm(form?: NgForm) {
-
-  //   if (form != null)
-  //     form.reset();
-
-  //   this.questionService.selectedQuestionType.emit({
-  //     key: 0,
-  //     title:'',
-  //     type:''
-
-  //   });
-  // }
 
   // deleteQuestions(form:NgForm) {
   //   if (confirm('Are you sure to delete this record ?') == true) {

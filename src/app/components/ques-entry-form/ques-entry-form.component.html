@@ -1,6 +1,6 @@
 <div>
     <h3>Questions Form</h3>
-    <form _form="NgForm" name="id" (ngSubmit)="OnSubmit(_form)" >
+    <form form="NgForm" name="id" (ngSubmit)="OnSubmit(form)" >
     <input type="text" name="id" hidden key="ngModel" [(ngModel)]="_form.id">
      <div>
        <label>Question Title:</label>
@@ -9,9 +9,9 @@
 
     <div>
       <label>Question Type:</label>
-        <select (change)=OnClick($event.target.value) placeholder="Select Options" name="QuesType" [(ngModel)]="_form.QuesType" >
+        <select (change)=OnClick($event.target.value) placeholder="Select Options" name="type" [(ngModel)]="_form.type" >
             <option value="default">Select Question Type</option>
-            <option *ngFor="let type of QuesType;let i=index" value="{{i}}" >
+            <option *ngFor="let type of QuesType;let i=index" [value]="type.name" >
             {{type.name}}
             </option>
         </select> 
@@ -25,7 +25,7 @@
           </li>
       </ol>
           <div >
-            <input type="text" placeholder="option" name="optText" [(ngModel)]="options">
+            <input type="text" placeholder="option" name="optText" [(ngModel)]="options" >
             <input type="checkbox" name="isCorrect" [(ngModel)]="answers">
             <br/>
             <input type="button" name="Add More" value="Add more" (click)="AddOptions()">
