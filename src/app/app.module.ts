@@ -5,7 +5,7 @@ import {DialogModule} from 'primeng/dialog';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { HttpModule } from '@angular/http'
-
+import { CommonModule } from '@angular/common';
 import {QuesService} from './components/questions-service/ques.service';
 import { AppComponent } from './app.component';
 import { FormsModule,ReactiveFormsModule} from '@angular/forms'
@@ -32,7 +32,8 @@ const routes:Routes =[
    ReactiveFormsModule,
    HttpModule,
    DialogModule,
-   BrowserAnimationsModule
+   BrowserAnimationsModule,
+   CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

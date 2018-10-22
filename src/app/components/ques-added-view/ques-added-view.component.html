@@ -32,10 +32,10 @@
             <td>{{qset.key}}</td>
             <td>{{qset.title}}</td>
             <td>{{qset.type}}</td>
-            <td>{{qset.Options}}</td>
-            <td>{{qset.checkbox}}</td>
-            <td><button (click)="OnUpdate()">EDIT</button></td>
-            <td><button (click)="OnDelete()">DELETE</button></td>
+            <td>{{qset.optionsArray}}</td>
+            <td></td>
+            <td><button (click)="EditQuestions()">EDIT</button></td>
+            <td><button (click)="deleteQuestions()">DELETE</button></td>
           </tr>
         </tbody>
       </table>

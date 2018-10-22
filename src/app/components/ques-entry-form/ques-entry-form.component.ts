@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-// import { Options } from 'selenium-webdriver/opera';
 import {Http} from '@angular/http';
 import { NgForm } from '@angular/forms';
 import { FormGroup,FormBuilder,FormArray,FormControl,Validators } from '@angular/forms';
@@ -15,8 +14,9 @@ export class QuesEntryFormComponent implements OnInit {
   SelectedOptions:Boolean=false;
   AnotherSelectedOption:Boolean=false;
   QuesType:any=[];
+
   EventsHasError = true;
-  // optionsList:any=[];
+
   options;
   answers;
 
@@ -106,9 +106,7 @@ export class QuesEntryFormComponent implements OnInit {
     this._form.type=null;
     this.options=null;
     this.answers=null
-    this._form.optionsArray=[
-    
-  ]
+    this._form.optionsArray=[];
     
 
     // this.questionService.selectedQuestionType.emit();{
@@ -118,17 +116,17 @@ export class QuesEntryFormComponent implements OnInit {
     //   optionsArray:[
     //     {optText:'',isCorrect:''}
     //   ]
-
     // }
   }
 
   OnSubmit(form:NgForm) {
     console.log(this._form);
     
-    // this.questionService.addQuestions(_form.value)
-    // .subscribe((data)=>{
-    //   console.log(data);
-    // })
+    this.questionService.addQuestions(this._form)
+    .subscribe((data)=>{
+      console.log("hello",data);
+    })
+
     alert('question has added');
     this.resetForm(form);
   }
