@@ -13,12 +13,13 @@ exports.create=(req,res)=>{
     //Create a Quiz
 
     const quiz=new Quiz({
-        title:req.body.title,
-        type:req.body.type,
-        options:req.body.options,
-        checkbox:req.body.checkbox,
-    
-    });
+        title:req.body._form.title,
+        type:req.body._form.type,
+        optionsArray:[{
+        optText:req.body._form.optText,
+        isCorrect:req.body._form.isCorrect
+        }]
+    })
 
     //Save quiz in the database
 
@@ -85,10 +86,13 @@ if(!req.body.content){
 //find quiz and update it with the request body
 
 Quiz.findByIdAndUpdate(req.params.quizId,{
-    title:req.body.title||"Untitled quiz",
-    type:req.body.type,
-    options:req.body.options,
-    checkbox:req.body.checkbox
+    title:req.body._form.title||"Untitled quiz",
+    type:req.body._form.type,
+    optionsArray:[{
+    optText:req.body._form.optText,
+    isCorrect:req.body._form.isCorrect
+    }]
+
 },{new:true})
 .then(quiz=>{
     if(!quiz){

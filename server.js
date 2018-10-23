@@ -1,12 +1,15 @@
 const express=require('express');
 const bodyParser=require('body-parser');
 const app=express();
+const cors=require('cors');
 
 const dbConfig=require('./config/database.config.js')
 
 
 const mongoose=require('mongoose');
 mongoose.Promise = global.Promise;
+
+app.use(cors);
 
 
 
