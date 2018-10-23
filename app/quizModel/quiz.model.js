@@ -7,7 +7,7 @@ const QuizSchema=mongoose.Schema({
     optText:String,
     isCorrect:Boolean 
     } 
-]       
+]    
 })
 
 module.exports=mongoose.model('Quiz',QuizSchema);

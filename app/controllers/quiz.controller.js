@@ -1,10 +1,12 @@
 const Quiz=require('../quizModel/quiz.model')
 
+
 //create and save a new Note
 
 exports.create=(req,res)=>{
+    console.log("==============",req.body)
     //validate a request
-    if(!req.body.content){
+    if(!req.body.title){
         return res.status(400).send({
             message:"Quiz content can not be empty"|| "Untitled Quiz"
         });
@@ -13,13 +15,10 @@ exports.create=(req,res)=>{
     //Create a Quiz
 
     const quiz=new Quiz({
-        title:req.body._form.title,
-        type:req.body._form.type,
-        optionsArray:[{
-        optText:req.body._form.optText,
-        isCorrect:req.body._form.isCorrect
-        }]
-    })
+        title:req.body.title,
+        type:req.body.type,
+        optionsArray:req.body.optionsArray
+    });
 
     //Save quiz in the database
 
@@ -38,9 +37,11 @@ exports.create=(req,res)=>{
 
 //Retrieve and return all quiz from database.
 exports.findAll=(req,res)=>{
+    
     Quiz.find()
     .then(quizes=>{
          res.send(quizes);
+         console.log(quizes);
         }).catch(err=>{
             res.send(500).send({
                 message:err.message||"some error occur while retreiving quizes"
@@ -77,7 +78,7 @@ exports.findOne=(req,res)=>{
 
 exports.update=(req,res)=>{
 //Validate request
-if(!req.body.content){
+if(!req.body.title){
     return res.status(400).send({
         message:"Note content can not be empty"
     });
@@ -86,11 +87,11 @@ if(!req.body.content){
 //find quiz and update it with the request body
 
 Quiz.findByIdAndUpdate(req.params.quizId,{
-    title:req.body._form.title||"Untitled quiz",
-    type:req.body._form.type,
+    title:req.body.title||"Untitled quiz",
+    type:req.body.type,
     optionsArray:[{
-    optText:req.body._form.optText,
-    isCorrect:req.body._form.isCorrect
+    optText:req.body.optText,
+    isCorrect:req.body.isCorrect
     }]
 
 },{new:true})
