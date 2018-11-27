@@ -3,14 +3,15 @@
 
 <div>
    <button type="text" (click)="showDialog()"  >ADD QUESTIONS</button>
-
+    
  <p-dialog  [(visible)]="display">
      <span id="dailog-box">
         <button type="button" style="float:right;" pButton icon="pi pi-close" (click)="display=false"label="Yes">x</button>
       <app-ques-entry-form ></app-ques-entry-form>
-     
+   
      </span>
  </p-dialog>
+ 
 </div>
 <br>
 
@@ -21,21 +22,40 @@
             <th>ID</th>
             <th>Title</th>
             <th>Type</th>
-            <th>Options</th>
-            <th>Answers</th>
+             <th>Options</th>
+             <th>Answers</th>
+            
             <th>Actions</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let qset of quesset">
-            <td>{{qset.key}}</td>
+            <td >{{qset._id}}</td>
             <td>{{qset.title}}</td>
             <td>{{qset.type}}</td>
-            <td>{{qset.optionsArray}}</td>
-            <td></td>
-            <td><button (click)="EditQuestions()">EDIT</button></td>
-            <td><button (click)="deleteQuestions()">DELETE</button></td>
+            <td>
+            <tr *ngFor="let options of qset.optionsArray ">
+              <td>{{options.optText}}</td>
+              <td>{{options.isCorrect}}</td>
+           </tr>
+            </td>
+            <td><button (click)="getQuestionsById(qset._id)">EDIT</button></td>
+            <!-- <td>
+              <div>
+                <button type="text" (click)="showDialog(qset._id)"  >Edit</button>
+                 
+              <p-dialog  [(visible)]="display">
+                  <span id="dailog-box">
+                     <button type="button" style="float:right;" pButton icon="pi pi-close" (click)="display=false"label="Yes">x</button>
+                   <app-ques-entry-form ></app-ques-entry-form>
+                
+                  </span>
+              </p-dialog>
+              
+             </div>
+            </td> -->
+            <td><button (click)="deleteQuestions(qset._id)">DELETE</button></td>
           </tr>
         </tbody>
       </table>

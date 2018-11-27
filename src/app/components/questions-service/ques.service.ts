@@ -1,37 +1,66 @@
 import { Injectable,EventEmitter} from '@angular/core';
 import {Observable,of} from 'rxjs';
-import {Http} from '@angular/http';
-import { QuestionType } from './questions.model'
+import {HttpClient} from '@angular/common/http';
+import { NgForm } from '@angular/forms';
+// import { QuestionType } from './questions.model'
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuesService {
 
+ 
+  // selectedQuestionType=new EventEmitter<QuestionType>();
 
-  selectedQuestionType=new EventEmitter<QuestionType>();
+  uri = 'http://localhost:3000';
 
-  constructor(private _http:Http) {}
-    addQuestions(questiontype:QuestionType){
-      console.log("its working");
-      return this._http.post("http://localhost:3000/quizes",questiontype);
+  constructor(private _http:HttpClient) {}
+
+
+    addQuestions(_form){
+    //  const quiz= {
+    //    title:title,
+    //   type:type,
+    //   optionsArray:[{
+    //   optText:optText,
+    //   isCorrect:isCorrect 
+      
+    //   }]
+    // }
+      console.log("post is working",+_form);
+      return this._http.post(`${this.uri}/quizes`,_form);
     }
+
+
   
     getQuestions(){
-      return this._http.get("http://localhost:3000/quizes")
+      console.log("get is working")
+      return this._http.get(`${this.uri}/quizes`)
     }
   
-    EditQuestions(questiontype:QuestionType,key:number){
-      console.log(key);
-      return this._http.put("http://localhost:3000/quizes/:quizId" +key,{
-        questiontype
-      })
-    }
+   getQuestionsById(id){
+     console.log("get questions by Id is working",+ id);
+     return this._http.get(`${this.uri}/quizes/${id}`);
+   }
+
+
+    editQuestions(id,form:NgForm){
+    //   const quiz= {
+    //     title:title,
+    //    type:type,
+    //    optionsArray:[{
+    //    optText:optText,
+    //    isCorrect:isCorrect 
+    //    }]
+    //  }
+       console.log("edit is working");
+       return this._http.put(`${this.uri}/quizes/${id}`,+ form);
+     }
+
+
   
-    deleteQuestions(key:number){
-      console.log("key",key)
-      return this._http.delete('http://localhost:3000/quizes/:quizId'+key);
-      
-    }
-   
+    deleteQuestions(id:Number){
+      console.log("delete is working")
+      return this._http.delete(`${this.uri}/quizes/${id}`); 
+    }  
 }

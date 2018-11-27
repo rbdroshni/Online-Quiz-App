@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {RouterModule,Routes} from '@angular/router';
-// import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import {NgForm} from '@angular/forms'
 import {QuesEntryFormComponent} from '../ques-entry-form/ques-entry-form.component';
 import {QuesService} from '../questions-service/ques.service';
-import {QuestionType} from '../questions-service/questions.model';
+// import {QuestionType} from '../questions-service/questions.model';
 // import {QuesSet} from './questionset' 
 import {QuesFormComponent} from '../ques-form/ques-form.component';
 
@@ -17,29 +17,54 @@ import {QuesFormComponent} from '../ques-form/ques-form.component';
 
 export class QuesAddedViewComponent implements OnInit {
   
-  selectedQuiz:QuestionType;
-  quesset:QuestionType[];
+  // selectedQuiz:QuestionType;
+  quesset:any=[];
   display: boolean = false;
+  _form:any=[];
+  id:any
 
 
   constructor(private quesservice:QuesService ) {
+    this.quesset=[];
+    this._form;
   }
 
   ngOnInit() {
+    this.getQuestions();
   }
 
   showDialog() {
     this.display = true;
 }
 
+getQuestions(){
+  this.quesservice.getQuestions()
+  .subscribe((questions)=>{
+    this.quesset=questions
+    console.log(questions);
+    console.log(this.quesset)
+  })
+}
 
-  EditQuestions(form: NgForm) {
-    console.log(form.value);
-    this.quesservice.EditQuestions(form.value,form.value.id)
+getQuestionsById(id){
+  this.quesservice.getQuestionsById(id)
+  .subscribe((ques)=>{
+  //  this._form=ques
+   console.log("question by id is getting",+ id);
+  })
+
+}
+
+  editQuestions(id:Number,_form:NgForm) {
+  
+    console.log("test",id);
+    this.showDialog();{  
+    this.quesservice.editQuestions(id,_form)
       .subscribe((data) => {
         console.log(data);
       });
-    alert(form.value.quesset + ' has been updated');
+    }
+    alert(_form.value + ' has been updated');
   }
 
   // OnUpdate(){
@@ -48,10 +73,10 @@ export class QuesAddedViewComponent implements OnInit {
 
 
 
-  deleteQuestions(form:NgForm) {
+  deleteQuestions(id:Number) {
     if (confirm('Are you sure to delete this record ?') == true) {
-     console.log(form.value);
-      this.quesservice.deleteQuestions(form.value.id).subscribe(response => {
+     console.log("delete test",+id);
+      this.quesservice.deleteQuestions(id).subscribe(response => {
         console.log(response);
         // this.refetchEvents();
       })

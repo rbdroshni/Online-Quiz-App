@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { FormGroup,FormBuilder,FormArray,FormControl,Validators } from '@angular/forms';
 import { QuesService } from '../questions-service/ques.service';
-import { QuestionType } from '../questions-service/questions.model'
+// import { QuestionType } from '../questions-service/questions.model'
 
 @Component({
   selector: 'app-ques-entry-form',
@@ -27,7 +27,7 @@ export class QuesEntryFormComponent implements OnInit {
     optionsArray:[
       {
         optText:'',
-        isCorrect:'' 
+        isCorrect:''
       }
     ]
   }
@@ -69,8 +69,7 @@ export class QuesEntryFormComponent implements OnInit {
     console.log(this.options+" "+this.answers);
     this._form.optionsArray.push({optText:this.options,isCorrect:this.answers});
     this.options=null;
-   this.answers=null;
-  
+   this.answers=false;
   }
 
 
@@ -121,14 +120,13 @@ export class QuesEntryFormComponent implements OnInit {
 
   OnSubmit(form:NgForm) {
     console.log(this._form);
-    
     this.questionService.addQuestions(this._form)
     .subscribe((data)=>{
       console.log("hello",data);
     })
 
     alert('question has added');
-    this.resetForm(form);
+    // this.resetForm(form);
   }
 
 

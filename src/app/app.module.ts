@@ -4,7 +4,7 @@ import { RouterModule,Routes} from '@angular/router';
 import {DialogModule} from 'primeng/dialog';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import { HttpModule } from '@angular/http'
+import { HttpClientModule } from '@angular/common/http'
 import { CommonModule } from '@angular/common';
 import {QuesService} from './components/questions-service/ques.service';
 import { AppComponent } from './app.component';
@@ -15,7 +15,7 @@ import { QuesFormComponent } from './components/ques-form/ques-form.component';
 
 
 const routes:Routes =[
-  {path:'quee-entry-form',component:QuesEntryFormComponent}
+  {path:'ques-entry-form',component:QuesEntryFormComponent}
 ]
 
 
@@ -30,7 +30,7 @@ const routes:Routes =[
     BrowserModule,
     FormsModule,
    ReactiveFormsModule,
-   HttpModule,
+   HttpClientModule,
    DialogModule,
    BrowserAnimationsModule,
    CommonModule
