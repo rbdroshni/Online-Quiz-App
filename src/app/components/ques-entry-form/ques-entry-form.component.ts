@@ -21,7 +21,7 @@ export class QuesEntryFormComponent implements OnInit {
   answers;
 
   _form = {
-    key: '',
+    key: 0,
     title: '',
     type:'',
     optionsArray:[

@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { CommonModule } from '@angular/common';
 import {QuesService} from './components/questions-service/ques.service';
 import { AppComponent } from './app.component';
-import { FormsModule,ReactiveFormsModule} from '@angular/forms'
+import { FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { QuesEntryFormComponent } from './components/ques-entry-form/ques-entry-form.component';
 import { QuesAddedViewComponent } from './components/ques-added-view/ques-added-view.component';
 import { QuesFormComponent } from './components/ques-form/ques-form.component';

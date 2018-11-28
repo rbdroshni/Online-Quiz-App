@@ -40,21 +40,8 @@
               <td>{{options.isCorrect}}</td>
            </tr>
             </td>
-            <td><button (click)="getQuestionsById(qset._id)">EDIT</button></td>
-            <!-- <td>
-              <div>
-                <button type="text" (click)="showDialog(qset._id)"  >Edit</button>
-                 
-              <p-dialog  [(visible)]="display">
-                  <span id="dailog-box">
-                     <button type="button" style="float:right;" pButton icon="pi pi-close" (click)="display=false"label="Yes">x</button>
-                   <app-ques-entry-form ></app-ques-entry-form>
-                
-                  </span>
-              </p-dialog>
-              
-             </div>
-            </td> -->
+            <td><button (click)="showDialog(qset._id)">EDIT</button></td> 
+          
             <td><button (click)="deleteQuestions(qset._id)">DELETE</button></td>
           </tr>
         </tbody>

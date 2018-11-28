@@ -38,13 +38,15 @@ export class QuesService {
       return this._http.get(`${this.uri}/quizes`)
     }
   
-   getQuestionsById(id){
-     console.log("get questions by Id is working",+ id);
+   getQuestionsById(id:any){
+    
+    // let id_number=parseInt(id)
+     console.log("get questions by Id is working",typeof id);
      return this._http.get(`${this.uri}/quizes/${id}`);
    }
 
 
-    editQuestions(id,form:NgForm){
+    editQuestions(id:any,form:NgForm){
     //   const quiz= {
     //     title:title,
     //    type:type,
@@ -59,8 +61,8 @@ export class QuesService {
 
 
   
-    deleteQuestions(id:Number){
-      console.log("delete is working")
+    deleteQuestions(id:any){
+      console.log("delete is working",+ id)
       return this._http.delete(`${this.uri}/quizes/${id}`); 
     }  
 }
