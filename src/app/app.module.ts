@@ -1,17 +1,17 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule,Routes} from '@angular/router';
-import {DialogModule} from 'primeng/dialog';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
+import { RouterModule,Routes } from '@angular/router';
+import { DialogModule } from 'primeng/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http'
 import { CommonModule } from '@angular/common';
-import {QuesService} from './components/questions-service/ques.service';
+import { QuesService } from './components/questions-service/ques.service';
 import { AppComponent } from './app.component';
 import { FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { QuesEntryFormComponent } from './components/ques-entry-form/ques-entry-form.component';
 import { QuesAddedViewComponent } from './components/ques-added-view/ques-added-view.component';
-import { QuesFormComponent } from './components/ques-form/ques-form.component';
+// import { QuesFormComponent } from './components/ques-form/ques-form.component';
+import { MatCardModule,MatToolbarModule,MatDialogModule,MatIconModule} from '@angular/material'
 
 
 const routes:Routes =[
@@ -24,16 +24,22 @@ const routes:Routes =[
     AppComponent,
     QuesEntryFormComponent,
     QuesAddedViewComponent,
-    QuesFormComponent,
+    // QuesFormComponent,
+  
   ],
   imports: [
-    BrowserModule,
-    FormsModule,
+   BrowserModule,
+   FormsModule,
    ReactiveFormsModule,
    HttpClientModule,
    DialogModule,
    BrowserAnimationsModule,
-   CommonModule
+   CommonModule,
+   MatCardModule,
+   MatIconModule,
+   MatToolbarModule,
+   MatDialogModule
+   
   ],
   providers: [],
   bootstrap: [AppComponent]

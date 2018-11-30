@@ -32,9 +32,9 @@ export class QuesEntryFormComponent implements OnInit {
     ]
   }
 
-  constructor(private questionService:QuesService) { 
+  constructor(public questionService:QuesService) { 
 
-    this.QuesType=[
+    this.QuesType = [
       {
         "id": "1",
         "name": "Single Options"
@@ -51,18 +51,10 @@ export class QuesEntryFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._form.optionsArray=[]
+    this._form.optionsArray=[];
+    console.log("testing get data at ui",this.questionService.quesData)
   }
 
-
-  // AddOptions(){
-  //   console.log(this.optText+" "+this.isCorrect);
-  //   // this._form.optionsArray.push({"optText":"","isCorrect":""})
-  //   // this._form.option
-    
-  //   this._form.optionsArray.push({optText:this.optText,isCorrect:this.isCorrect})
-  
-  // }
 
   AddOptions(){
     console.log(this._form.optionsArray);
@@ -107,15 +99,6 @@ export class QuesEntryFormComponent implements OnInit {
     this.answers=null
     this._form.optionsArray=[];
     
-
-    // this.questionService.selectedQuestionType.emit();{
-    //   key:0;
-    //   title:'';
-    //   type:'';
-    //   optionsArray:[
-    //     {optText:'',isCorrect:''}
-    //   ]
-    // }
   }
 
   OnSubmit(form:NgForm) {
@@ -126,7 +109,7 @@ export class QuesEntryFormComponent implements OnInit {
     })
 
     alert('question has added');
-    // this.resetForm(form);
+    this.resetForm(form);
   }
 
 
@@ -143,17 +126,5 @@ export class QuesEntryFormComponent implements OnInit {
       console.log("AnotherSelectedOption", this.AnotherSelectedOption);
     } 
   }
-
-
-
-  // deleteQuestions(form:NgForm) {
-  //   if (confirm('Are you sure to delete this record ?') == true) {
-  //    console.log(form.value);
-  //     this.questionService.deleteQuestions(form.value.id).subscribe(response => {
-  //       console.log(response);
-  //       // this.refetchEvents();
-  //     })
-  //   }
-  // }
 
 }

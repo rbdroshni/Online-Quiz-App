@@ -1,3 +1,29 @@
-<p>
-  ques-form works!
-</p>
+<mat-card-header>
+  <mat-toolbar class="toolbar">
+    <mat-card-title>Questions Information</mat-card-title>
+    <span class="toolbar-spacer"></span>
+    <mat-icon (click)="onClick()">Cancel</mat-icon>
+  </mat-toolbar>
+</mat-card-header>
+<mat-card-content>
+  <div class="container">
+    <form [FormGroup]="QuestionsForm" (submit)="onSubmit()"></form>
+    <div class="form-group">
+      <div class="row">
+      <div class="col-md-6">
+        <label>title:</label>
+        <input type="text" FormControlName="title" class="form-control">
+      </div>
+
+      <div class="col-md-6">
+          <label>type:</label>
+          <input type="text" FormControlName="type" class="form-control">
+      </div>
+
+      </div>
+    </div>
+   <div class="row">
+     <button type="submit" class="btn btn-success"><mat-icon></mat-icon>save</button>
+   </div>
+  </div>
+</mat-card-content>

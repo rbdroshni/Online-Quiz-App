@@ -2,6 +2,7 @@ import { Injectable,EventEmitter} from '@angular/core';
 import {Observable,of} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import { NgForm } from '@angular/forms';
+import { QuestionType } from './questions.model';
 // import { QuestionType } from './questions.model'
 
 @Injectable({
@@ -9,6 +10,9 @@ import { NgForm } from '@angular/forms';
 })
 export class QuesService {
 
+  public static quesData:any={};
+
+  _quesList:QuestionType[]=[];
  
   // selectedQuestionType=new EventEmitter<QuestionType>();
 
@@ -17,31 +21,23 @@ export class QuesService {
   constructor(private _http:HttpClient) {}
 
 
+  public get quesData() : any {    
+    return QuesService.quesData  
+  }
+  public set quesData(v : any) {    
+  QuesService.quesData = v  
+  }
+
     addQuestions(_form){
-    //  const quiz= {
-    //    title:title,
-    //   type:type,
-    //   optionsArray:[{
-    //   optText:optText,
-    //   isCorrect:isCorrect 
-      
-    //   }]
-    // }
-      console.log("post is working",+_form);
+      console.log("post is working",_form);
       return this._http.post(`${this.uri}/quizes`,_form);
     }
 
-
-  
-    getQuestions(){
-      console.log("get is working")
+    getQuestions(){ 
       return this._http.get(`${this.uri}/quizes`)
     }
   
-   getQuestionsById(id:any){
-    
-    // let id_number=parseInt(id)
-     console.log("get questions by Id is working",typeof id);
+   getQuestionsById(id:any){    
      return this._http.get(`${this.uri}/quizes/${id}`);
    }
 
