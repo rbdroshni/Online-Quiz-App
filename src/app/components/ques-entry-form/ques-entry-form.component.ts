@@ -60,7 +60,7 @@ export class QuesEntryFormComponent implements OnInit {
     console.log(this._form.optionsArray);
     console.log(this.options+" "+this.answers);
     this._form.optionsArray.push({optText:this.options,isCorrect:this.answers});
-    this.options=null;
+    this.options="";
    this.answers=false;
   }
 

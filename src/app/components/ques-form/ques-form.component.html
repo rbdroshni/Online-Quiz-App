@@ -7,23 +7,60 @@
 </mat-card-header>
 <mat-card-content>
   <div class="container">
-    <form [FormGroup]="QuestionsForm" (submit)="onSubmit()"></form>
+    <form [formGroup]="QuestionsForm" (submit)="onSubmit()"></form>
     <div class="form-group">
+
       <div class="row">
       <div class="col-md-6">
-        <label>title:</label>
-        <input type="text" FormControlName="title" class="form-control">
+        <label>Questions Title:</label>
+        <input type="text" [formControl]="title" class="form-control">
       </div>
-
+     </div>
+    
+<!-- 
+     <div class="row">
       <div class="col-md-6">
-          <label>type:</label>
-          <input type="text" FormControlName="type" class="form-control">
-      </div>
-
+        <label>Questions Type:</label>
+        <select (change)=OnClick($event.target.value) placeholder="Select Options" [formControl]="qtype" class="form-control" >
+        <option value="default">Select Question Type</option>
+        <option *ngFor="let type of QuesType;let i=index" [value]="type.name" >
+            {{type.name}}
+         </option>
+        </select> 
       </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-6">
+      <div *ngIf="SelectedOptions">
+          <label>Options:</label>
+          <ol> 
+               <li *ngFor="let key of _form.optionsArray">
+                   {{key.optText}}    {{key.isCorrect}}
+                 <button (click)="DeleteOptions(key.optText)">-</button>
+               </li>
+           </ol>
+               <div >
+                 <input type="text" placeholder="options" [formControl]="optText" class="form-control" >
+                 <input type="checkbox" [formControl]="isCorrect" class="form-control">
+                 <br/>
+                 <input type="button" name="Add More" value="Add more" (click)="AddOptions()">
+               </div>
+               <div class="form-group">
+                  <input type="reset" id="reset-button" value="Reset"/>
+                  <input type="submit" id="submit-button" value="Submit" />
+               </div>
+      </div>
+
+      <div *ngIf="AnotherSelectedOption||SelectedOptions" ></div> 
+    </div>
+  </div> -->
+     
+
+     
+    </div> 
    <div class="row">
-     <button type="submit" class="btn btn-success"><mat-icon></mat-icon>save</button>
+     <button type="submit" class="btn btn-success"><mat-icon>Save</mat-icon></button>
    </div>
   </div>
 </mat-card-content>

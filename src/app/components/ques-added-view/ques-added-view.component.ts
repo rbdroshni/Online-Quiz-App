@@ -6,7 +6,7 @@ import {QuesEntryFormComponent} from '../ques-entry-form/ques-entry-form.compone
 import {QuesService} from '../questions-service/ques.service';
 // import {QuestionType} from '../questions-service/questions.model';
 // import {QuesSet} from './questionset' 
-import {QuesFormComponent} from '../ques-form/ques-form.component';
+// import {QuesFormComponent} from '../ques-form/ques-form.component';
 
 
 @Component({
