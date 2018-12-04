@@ -17,8 +17,8 @@ export class QuesEntryFormComponent implements OnInit {
 
   EventsHasError = true;
 
-  options;
-  answers;
+  options:any="";
+  answers:boolean=false;
 
   _form = {
     key: 0,
@@ -27,7 +27,7 @@ export class QuesEntryFormComponent implements OnInit {
     optionsArray:[
       {
         optText:'',
-        isCorrect:''
+        isCorrect:false
       }
     ]
   }

@@ -11,13 +11,14 @@ import { ReactiveFormsModule,FormsModule,Validators} from '@angular/forms';
 import { QuesEntryFormComponent } from './components/ques-entry-form/ques-entry-form.component';
 import { QuesAddedViewComponent } from './components/ques-added-view/ques-added-view.component';
 // import { QuesFormComponent } from './components/ques-form/ques-form.component';
-import { MatCardModule,MatToolbarModule,MatDialogModule,MatIconModule,
-  // MatDialog, 
-  MatInputModule,
-  // MatDialogRef,
-  // MAT_DIALOG_DATA
-} from '@angular/material';
-import { QuestionsListComponent } from './components/questions-list/questions-list.component';
+// import { MatCardModule,MatToolbarModule,MatDialogModule,MatIconModule,
+//   // MatDialog, 
+//   MatInputModule,
+//   // MatDialogRef,
+//   MAT_DIALOG_DATA
+// } from '@angular/material';
+// import { QuestionsListComponent } from './components/questions-list/questions-list.component';
+
 
 
 
@@ -32,7 +33,7 @@ const routes:Routes =[
     QuesEntryFormComponent,
     QuesAddedViewComponent,
     // QuesFormComponent,
-    QuestionsListComponent,
+    // QuestionsListComponent,
     
   
   ],
@@ -44,26 +45,25 @@ const routes:Routes =[
    DialogModule,
    BrowserAnimationsModule,
    CommonModule,
-   MatInputModule,
-   MatCardModule,
-   MatIconModule,
-   MatToolbarModule,
-   MatDialogModule,
-  // MatDialogRef,
-  // MatDialog
-  
-   
+  //  MatInputModule,
+  //  MatCardModule,
+  //  MatIconModule,
+  //  MatToolbarModule,
+  //  MatDialogModule,
+  //  MatDialogRef,
+  //  MatDialog  
   ],
   exports:[
     FormsModule,
     ReactiveFormsModule
   ],
   providers: [
-    // MatDialog,
+    // QuesService,QuestionsListComponent,
     // { provide: MatDialog, useValue: {} },
     // { provide: MatDialogRef, useValue: {} },
 	// { provide: MAT_DIALOG_DATA, useValue: [] },
   ],
+  // entryComponents:[QuesFormComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

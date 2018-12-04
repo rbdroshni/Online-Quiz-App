@@ -17,9 +17,7 @@ export class QuesService {
   // selectedQuestionType=new EventEmitter<QuestionType>();
 
   uri = 'http://localhost:3000';
-
   constructor(private _http:HttpClient) {}
-
 
   public get quesData() : any {    
     return QuesService.quesData  
