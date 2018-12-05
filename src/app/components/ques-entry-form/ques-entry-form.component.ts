@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { FormGroup,FormBuilder,FormArray,FormControl,Validators } from '@angular/forms';
 import { QuesService } from '../questions-service/ques.service';
+import { Options } from 'selenium-webdriver/ie';
 // import { QuestionType } from '../questions-service/questions.model'
 
 @Component({
@@ -18,16 +19,16 @@ export class QuesEntryFormComponent implements OnInit {
   EventsHasError = true;
 
   options:any="";
-  answers:boolean=false;
+  answers:any="";
 
   _form = {
-    key: 0,
+    key: 1,
     title: '',
     type:'',
     optionsArray:[
       {
         optText:'',
-        isCorrect:false
+        isCorrect:''
       }
     ]
   }
@@ -55,13 +56,40 @@ export class QuesEntryFormComponent implements OnInit {
     console.log("testing get data at ui",this.questionService.quesData)
   }
 
-
   AddOptions(){
     console.log(this._form.optionsArray);
     console.log(this.options+" "+this.answers);
     this._form.optionsArray.push({optText:this.options,isCorrect:this.answers});
-    this.options="";
-   this.answers=false;
+  //   this.options="";
+  //  this.answers=false;
+  //  console.log("chexkbox",+this.answers);
+  }
+
+  optionChecked(value:any,event){
+   let index;
+   if(event.target.checked){
+    //  let tempArray=[];
+    // tempArray.push({optText:this.options,isCorrect:value});
+
+    
+     console.log("checked");
+     index= this._form.optionsArray.findIndex(x=>{return x.optText == value})
+     this._form.optionsArray[index]={optText:value,isCorrect:value}
+     console.log(" result options",this._form.optionsArray);
+     console.log(index,"index");
+
+    // console.log("checked ",tempArray);
+
+   }
+   else{
+    index= this._form.optionsArray.findIndex(x=>{return x.optText == value})
+    this._form.optionsArray[index]={optText:value,isCorrect:""}
+    console.log("else case",this._form.optionsArray);
+    console.log(value,event,"option unchecked");
+    console.log("unchecked ",null);
+
+   }
+    
   }
 
 
@@ -74,13 +102,7 @@ export class QuesEntryFormComponent implements OnInit {
     }
   }
 
-  // Remove()
-  //   {
-  //     console.log("last options has been removed")
-  //     this._form.optionsArray.pop();
-  //   }
-
-
+ 
   validateQuestions(value) {
     if (value == 'default') {
       this.EventsHasError = true;

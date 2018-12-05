@@ -11,7 +11,7 @@
       <label>Question Type:</label>
         <select (change)=OnClick($event.target.value) placeholder="Select Options" name="type" [(ngModel)]="_form.type" >
             <option value="default">Select Question Type</option>
-            <option *ngFor="let type of QuesType;let i=index" [value]="type.name" >
+            <option *ngFor="let type of QuesType;let i=index" [value]="type.name">
             {{type.name}}
             </option>
         </select> 
@@ -20,13 +20,15 @@
    <div *ngIf="SelectedOptions">
      <ol> 
           <li *ngFor="let key of _form.optionsArray">
-              {{key.optText}}    {{key.isCorrect}}
+              {{key.optText}}    
+            <input type="checkbox" name="isCorrect" [value]="key.optText" (change)="optionChecked(key.optText,$event)">
             <button (click)="DeleteOptions(key.optText)">-</button>
           </li>
       </ol>
-          <div >
-            <input type="text" placeholder="option" name="optText" [(ngModel)]="options" >
-            <input type="checkbox" name="isCorrect" [(ngModel)]="answers">
+          <div>
+            <input type="text" placeholder="option" name="optText" [(ngModel)]="options">
+            <!-- <input type="checkbox" name="isCorrect" [(ngModel)]="answers"> -->
+            
             <br/>
             <input type="button" name="Add More" value="Add option" (click)="AddOptions()">
           </div>
