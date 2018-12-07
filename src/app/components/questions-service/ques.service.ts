@@ -12,12 +12,16 @@ export class QuesService {
 
   public static quesData:any={};
 
-  _quesList:QuestionType[]=[];
+  // _quesList:QuestionType[]=[];
+
+  public display:boolean=false;
  
-  // selectedQuestionType=new EventEmitter<QuestionType>();
+  selectedQuestionType=new EventEmitter<QuestionType>();
 
   uri = 'http://localhost:3000';
   constructor(private _http:HttpClient) {}
+
+
 
   public get quesData() : any {    
     return QuesService.quesData  
@@ -26,6 +30,7 @@ export class QuesService {
   QuesService.quesData = v  
   }
 
+ 
     addQuestions(_form){
       console.log("post is working",_form);
       return this._http.post(`${this.uri}/quizes`,_form);

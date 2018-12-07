@@ -20,6 +20,7 @@ export class QuesAddedViewComponent implements OnInit {
   // selectedQuiz:QuestionType;
   quesset:any=[];
   display: boolean = false;
+  
   _form :any= {
     key: 0,
     title: '',
@@ -47,7 +48,7 @@ export class QuesAddedViewComponent implements OnInit {
   
     if(id){
 
-      this.quesservice.getQuestionsById(id,)
+      this.quesservice.getQuestionsById(id)
       .subscribe((ques)=>{
         this._form=ques;
         console.log("testing id",id);
@@ -63,14 +64,11 @@ export class QuesAddedViewComponent implements OnInit {
       //   }
       // }
 
-      this.display = true; 
+      this.quesservice.display = true; 
     }
-
-
    else{ 
-     this.display=true;
-   }
-   
+     this.quesservice.display=true;
+   }  
 }
 
 getQuestions(){
@@ -78,7 +76,6 @@ getQuestions(){
   .subscribe((questions)=>{
     this.quesset=questions
     console.log(questions);
-    
   })
 }
 
@@ -86,7 +83,7 @@ getQuestionsById(id:any){
   
   this.quesservice.getQuestionsById(id)
   .subscribe((ques)=>{
-   this._form=ques
+   this._form=ques;
    this.quesservice.quesData =ques;
    console.log("data from one id",ques);
    console.log("question by id is getting",id,this._form);
@@ -94,8 +91,9 @@ getQuestionsById(id:any){
 }
 
   editQuestions(_id:any,_form:NgForm) {
-    console.log("test",_id);
-    this.showDialog(_form);{  
+    // console.log("test",_id);
+    // this.showDialog(_form);
+    {  
     this.quesservice.editQuestions(_id,_form)
       .subscribe((data) => {
         console.log(data);
@@ -110,6 +108,7 @@ getQuestionsById(id:any){
       this.quesservice.deleteQuestions(id).subscribe(response => {
         console.log(response);
         // this.refetchEvents();
+        location.reload();
       })
     }
   }

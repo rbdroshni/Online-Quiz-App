@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { FormGroup,FormBuilder,FormArray,FormControl,Validators } from '@angular/forms';
 import { QuesService } from '../questions-service/ques.service';
 import { Options } from 'selenium-webdriver/ie';
 // import { QuestionType } from '../questions-service/questions.model'
+import { QuesAddedViewComponent } from '../ques-added-view/ques-added-view.component'
 
 @Component({
   selector: 'app-ques-entry-form',
@@ -15,6 +16,9 @@ export class QuesEntryFormComponent implements OnInit {
   SelectedOptions:Boolean=false;
   AnotherSelectedOption:Boolean=false;
   QuesType:any=[];
+
+  @Input() quesset:any=[];
+
 
   EventsHasError = true;
 
@@ -60,7 +64,7 @@ export class QuesEntryFormComponent implements OnInit {
     console.log(this._form.optionsArray);
     console.log(this.options+" "+this.answers);
     this._form.optionsArray.push({optText:this.options,isCorrect:this.answers});
-  //   this.options="";
+    this.options="";
   //  this.answers=false;
   //  console.log("chexkbox",+this.answers);
   }
@@ -87,7 +91,6 @@ export class QuesEntryFormComponent implements OnInit {
     console.log("else case",this._form.optionsArray);
     console.log(value,event,"option unchecked");
     console.log("unchecked ",null);
-
    }
     
   }
@@ -125,12 +128,21 @@ export class QuesEntryFormComponent implements OnInit {
 
   OnSubmit(form:NgForm) {
     console.log(this._form);
+    this.questionService.display=false;
     this.questionService.addQuestions(this._form)
     .subscribe((data)=>{
+     
       console.log("hello",data);
     })
-
-    alert('question has added');
+   
+    // this.questionService.getQuestions()
+    // .subscribe((questions)=>{
+    //   this.quesset=questions
+    //   console.log(questions);
+      
+    // })
+    location.reload();
+    // alert('question has added');
     this.resetForm(form);
   }
 
@@ -147,6 +159,17 @@ export class QuesEntryFormComponent implements OnInit {
       this.AnotherSelectedOption=true;
       console.log("AnotherSelectedOption", this.AnotherSelectedOption);
     } 
+  }
+
+  getQuestionsById(id:any){
+  
+    this.questionService.getQuestionsById(id)
+    .subscribe((ques)=>{
+     this.quesset=ques;
+     this.questionService.quesData =ques;
+     console.log("data from one id",ques);
+     console.log("question by id is getting",id,this._form);
+    })
   }
 
 }
