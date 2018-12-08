@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {RouterModule,Routes} from '@angular/router';
-// import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import {NgForm} from '@angular/forms'
 import {QuesEntryFormComponent} from '../ques-entry-form/ques-entry-form.component';
-// import { QuesService } from '../questions-service/ques.service';
 import {QuesService} from '../questions-service/ques.service';
-import {QuestionType} from '../questions-service/questions.model';
-import {QuesSet} from './questionset' 
+// import {QuestionType} from '../questions-service/questions.model';
+// import {QuesSet} from './questionset' 
+// import {QuesFormComponent} from '../ques-form/ques-form.component';
 
 
 @Component({
@@ -16,46 +16,101 @@ import {QuesSet} from './questionset'
 })
 
 export class QuesAddedViewComponent implements OnInit {
-  quesset=QuesSet;
   
-display="none";
+  // selectedQuiz:QuestionType;
+  quesset:any=[];
+  display: boolean = false;
+  
+  _form :any= {
+    key: 0,
+    title: '',
+    type:'',
+    optionsArray:[
+      {
+        optText:'',
+        isCorrect:''
+      }
+    ]
+  }
 
-  constructor( ) {
+  id:any;
+  constructor(public quesservice:QuesService ) {
+    this.quesset=[];
+    this._form;
+    this.getQuestionsById;
   }
 
   ngOnInit() {
+    this.getQuestions();
   }
 
-
-  openModalDialog(){
-    console.log("Modal is working");
-    this.display="Block";
-  }
+  showDialog(id?:any,_form?:any) {
   
-  closeModalDialog(){
-    console.log("it been closed");
-    this.display="none";
+    if(id){
+
+      this.quesservice.getQuestionsById(id)
+      .subscribe((ques)=>{
+        this._form=ques;
+        console.log("testing id",id);
+        console.log("testing data",ques);
+      })
+      // for(let i in this.quesset){
+
+      //   console.log("teting for",i);
+      //   if(id==this.quesset[i]._id){
+      //     console.log("testing if")
+      //     this.getQuestionsById(id)
+      //     this.display = true;   
+      //   }
+      // }
+
+      this.quesservice.display = true; 
+    }
+   else{ 
+     this.quesservice.display=true;
+   }  
+}
+
+getQuestions(){
+  this.quesservice.getQuestions()
+  .subscribe((questions)=>{
+    this.quesset=questions
+    console.log(questions);
+  })
+}
+
+getQuestionsById(id:any){
+  
+  this.quesservice.getQuestionsById(id)
+  .subscribe((ques)=>{
+   this._form=ques;
+   this.quesservice.quesData =ques;
+   console.log("data from one id",ques);
+   console.log("question by id is getting",id,this._form);
+  })
+}
+
+  editQuestions(_id:any,_form:NgForm) {
+    // console.log("test",_id);
+    // this.showDialog(_form);
+    {  
+    this.quesservice.editQuestions(_id,_form)
+      .subscribe((data) => {
+        console.log(data);
+      });
+    }
+    alert(_id + ' has been updated');
   }
 
-  // EditQuestions(form: NgForm) {
-  //   console.log(form.value);
-  //   this.questionService.EditQuestions(form.value,form.value.id)
-  //     .subscribe((data) => {
-  //       console.log(data);
-  //     });
-  //   alert(form.value.commonevents + ' has been updated');
-  // }
-
-
-
-  // deleteQuestions(form:NgForm) {
-  //   if (confirm('Are you sure to delete this record ?') == true) {
-  //    console.log(form.value);
-  //     this.questionService.deleteQuestions(form.value.id).subscribe(response => {
-  //       console.log(response);
-  //       // this.refetchEvents();
-  //     })
-  //   }
-  // }
+  deleteQuestions(id:any) {
+    if (confirm('Are you sure to delete this record ?') == true) {
+     console.log("delete test",+id);
+      this.quesservice.deleteQuestions(id).subscribe(response => {
+        console.log(response);
+        // this.refetchEvents();
+        location.reload();
+      })
+    }
+  }
 
 }

@@ -1,0 +1,99 @@
+<mat-card-header>
+  <mat-toolbar class="toolbar">
+    <mat-card-title>Questions</mat-card-title>
+    <span class="toolbar-spacer"></span>
+    <mat-icon (click)="onClick()">x</mat-icon>
+  </mat-toolbar>
+</mat-card-header>
+<mat-card-content>
+  <div class="container">
+    <form [formGroup]="questionsForm" (submit)="onSubmit()">
+    <div class="form-group">
+
+      <div class="row">
+      <div class="col-md-6">
+        <label>Questions Title:</label>
+        <input type="text" [formControl]="title" class="form-control">
+      </div>
+ 
+      <!-- <div class="col-md-6">
+          <label>Questions Type:</label>
+          <input type="text" [formControl]="qtype" class="form-control">
+      </div> -->
+     </div>
+
+     <!-- <div class="row">
+        <div class="col-md-6">
+          <label>Options:</label>
+          <input type="text" [formControl]="email" class="form-control">
+        </div>
+  
+        <div class="col-md-6">
+            <label>Answers:</label>
+            <input type="text" [formControl]="contact" class="form-control">
+        </div>
+       </div>  -->
+    
+
+     <div class="row">
+      <div class="col-md-6">
+        <label>Questions Type:</label>
+        <select (change)=OnClick($event.target.value) placeholder="Select Options" [formControl]="qtype" class="form-control">
+        <option value="default">Select Question Type</option>
+        <option *ngFor="let type of QuesType;let i=index" [value]="type.name">
+            {{type.name}}
+        </option>
+        </select> 
+    
+
+ 
+
+      <div *ngIf="SelectedOptions">
+          <label>Options:</label>
+          <!-- <ol> 
+               <li *ngFor="let key of _form.optionsArray">
+                   {{key.optText}}    {{key.isCorrect}}
+                 <button (click)="DeleteOptions(key.optText)">-</button>
+               </li>
+           </ol>
+               <div >
+                 <input type="text" placeholder="options" [formControl]="optText" class="form-control" >
+                 <input type="checkbox" [formControl]="isCorrect" class="form-control">
+                 <br/>
+                 <input type="button" name="Add More" value="Add more" (click)="AddOptions()">
+               </div>
+
+               <div class="form-group">
+                  <input type="reset" id="reset-button" value="Reset"/>
+                  <input type="submit" id="submit-button" value="Submit" />
+               </div> -->
+          <div formArrayName="_options" *ngFor="let option of questionsForm.get('_options').controls; let i=index;">
+          <div formGroup="i">
+            <input type="text" formControlName="optText" placeholder="options">
+            <input type="checkbox" formControlName="isCorrect">
+            <input type="button" name="Add More" value="Add more" (click)="addOptions()">
+          </div>
+
+          Chosen options:{{questionForm.controls._options.controls[i].controls.name.value}}
+
+          </div>
+
+      </div>
+
+      <div *ngIf="AnotherSelectedOption||SelectedOptions" ></div> 
+
+          
+  
+    </div>
+  </div>
+
+ 
+
+  </div> 
+</form>
+<div class="row">
+    <mat-icon><button type="submit" class="btn btn-success">Save</button></mat-icon>
+</div> 
+  
+  </div>
+</mat-card-content>

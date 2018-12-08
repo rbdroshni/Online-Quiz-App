@@ -1,15 +1,20 @@
-<app-ques-entry-form></app-ques-entry-form>
 
-
-<hr/>
-<hr/>
-
-<h5>Added Questions</h5>
+<h5 > Questions Details</h5>
 
 <div>
-  <button (click)="openModalDialog()"><span area-hidden="true"></span>+ADD QUESTIONS</button>
+   <button type="text" (click)="showDialog()"  >ADD QUESTIONS</button>
+    
+ <p-dialog  [(visible)]="quesservice.display">
+     <span id="dailog-box">
+        <button type="button" style="float:right;" pButton icon="pi pi-close" (click)="quesservice.display=false"label="Yes">close</button>
+     <!-- <app-ques-form></app-ques-form>    -->
+     <app-ques-entry-form [quesset]></app-ques-entry-form>
+     </span>
+ </p-dialog>
+ 
 </div>
 <br>
+
 <div class="container">
       <table class="table">
         <thead>
@@ -17,30 +22,38 @@
             <th>ID</th>
             <th>Title</th>
             <th>Type</th>
-            <th>Options</th>
-            <th>Answers</th>
+            <th>
+              <tr>
+                <th>Options</th>
+                <th></th>
+                <th>Answers</th>
+              </tr>
+            </th>
             <th>Actions</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let qset of quesset">
-            <td>{{qset.key}}</td>
+            <td >{{qset._id}}</td>
             <td>{{qset.title}}</td>
             <td>{{qset.type}}</td>
-            <td>{{qset.options}}</td>
-            <td>{{qset.checkbox}}</td>
-            <td><button>EDIT</button></td>
-            <td><button>DELETE</button></td>
+            <td>
+            <tr *ngFor="let options of qset.optionsArray ">
+              <td>{{options.optText}}</td>
+              <td></td>
+              <td></td>
+              <td>{{options.isCorrect}}</td>
+           </tr>
+            </td>
+            <td><button (click)="editQuestions(qset.id)">EDIT</button></td> 
+          
+            <td><button (click)="deleteQuestions(qset._id)">DELETE</button></td>
           </tr>
         </tbody>
       </table>
 </div> 
 
-<!-- 
-<div *ngIf="true">
-  <app-ques-entry-form></app-ques-entry-form>
-  </div>  -->
 
 
  

@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-// import { Options } from 'selenium-webdriver/opera';
-import {Http} from '@angular/http';
+import { Component, OnInit, Input } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { FormGroup,FormBuilder,FormArray,FormControl,Validators } from '@angular/forms';
 import { QuesService } from '../questions-service/ques.service';
-
-import { QuestionType } from '../questions-service/questions.model'
+import { Options } from 'selenium-webdriver/ie';
+// import { QuestionType } from '../questions-service/questions.model'
+import { QuesAddedViewComponent } from '../ques-added-view/ques-added-view.component'
 
 @Component({
   selector: 'app-ques-entry-form',
@@ -13,31 +13,33 @@ import { QuestionType } from '../questions-service/questions.model'
   styleUrls: ['./ques-entry-form.component.css']
 })
 export class QuesEntryFormComponent implements OnInit {
-
-  Options = ["Single Options", "Multiple Options", "Input text"]
+  SelectedOptions:Boolean=false;
+  AnotherSelectedOption:Boolean=false;
   QuesType:any=[];
-  key:any=0;
-  Qoption:any=[];
-  FormGroup:FormGroup;
-  display:'none';
-  
+
+  @Input() quesset:any=[];
+
 
   EventsHasError = true;
 
+  options:any="";
+  answers:any="";
+
   _form = {
-    key: 0,
+    key: 1,
     title: '',
-    optText:'',
-    isCorrect:'',
-    optionsArray:[{
-    optText:'',
-    isCorrect:'',
-    }]
+    type:'',
+    optionsArray:[
+      {
+        optText:'',
+        isCorrect:''
+      }
+    ]
   }
 
-  constructor(private questionService:QuesService,private _fb:FormBuilder) { 
+  constructor(public questionService:QuesService) { 
 
-    this.QuesType=[
+    this.QuesType = [
       {
         "id": "1",
         "name": "Single Options"
@@ -54,25 +56,56 @@ export class QuesEntryFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._form.optionsArray.push({"optText":"","isCorrect":""})
+    this._form.optionsArray=[];
+    console.log("testing get data at ui",this.questionService.quesData)
   }
 
+  AddOptions(){
+    console.log(this._form.optionsArray);
+    console.log(this.options+" "+this.answers);
+    this._form.optionsArray.push({optText:this.options,isCorrect:this.answers});
+    this.options="";
+  //  this.answers=false;
+  //  console.log("chexkbox",+this.answers);
+  }
 
-  Add(){
-    console.log("One more option Added")
-    // this._form.optionsArray.push({"optText":"","isCorrect":""})
-    // this._form.option
+  optionChecked(value:any,event){
+   let index;
+   if(event.target.checked){
+    //  let tempArray=[];
+    // tempArray.push({optText:this.options,isCorrect:value});
+
     
-    this._form.optionsArray.push({optText:this._form.optText,isCorrect:this._form.isCorrect})
+     console.log("checked");
+     index= this._form.optionsArray.findIndex(x=>{return x.optText == value})
+     this._form.optionsArray[index]={optText:value,isCorrect:value}
+     console.log(" result options",this._form.optionsArray);
+     console.log(index,"index");
+
+    // console.log("checked ",tempArray);
+
+   }
+   else{
+    index= this._form.optionsArray.findIndex(x=>{return x.optText == value})
+    this._form.optionsArray[index]={optText:value,isCorrect:""}
+    console.log("else case",this._form.optionsArray);
+    console.log(value,event,"option unchecked");
+    console.log("unchecked ",null);
+   }
+    
   }
 
-  Remove()
-    {
-      console.log("last options has been removed")
-      this._form.optionsArray.pop();
+
+  DeleteOptions(optText){
+    console.log(optText);
+    for(var i=0;i<this._form.optionsArray.length;i++){
+      if(this._form.optionsArray[i]["optText"]==optText){
+        this._form.optionsArray.splice(i,1);
+      }
     }
+  }
 
-
+ 
   validateQuestions(value) {
     if (value == 'default') {
       this.EventsHasError = true;
@@ -82,51 +115,61 @@ export class QuesEntryFormComponent implements OnInit {
   }
 
 
-
-  OnSubmit() {
-    console.log(this._form);
+  resetForm(form?:NgForm){
+    if(form !=null)
+    this._form.key=null;
+    this._form.title=null;
+    this._form.type=null;
+    this.options=null;
+    this.answers=null
+    this._form.optionsArray=[];
     
-    // this.questionService.addQuestions(form.value)
-    // .subscribe((data)=>{
-    //   console.log(data);
-    // })
-    // alert(form.value.questype + 'question has added');
-    // this.resetForm(form);
   }
 
+  OnSubmit(form:NgForm) {
+    console.log(this._form);
+    this.questionService.display=false;
+    this.questionService.addQuestions(this._form)
+    .subscribe((data)=>{
+     
+      console.log("hello",data);
+    })
+   
+    // this.questionService.getQuestions()
+    // .subscribe((questions)=>{
+    //   this.quesset=questions
+    //   console.log(questions);
+      
+    // })
+    location.reload();
+    // alert('question has added');
+    this.resetForm(form);
+  }
 
 
   OnClick(options) {
+
     console.log(options);
+    if((options=="Single Options")||(options=="Multiple Options")){
+      this.SelectedOptions=true;
+      console.log("SelectedOptions ", this.SelectedOptions);
+    } 
+    else if(options=="input text"){
+      this.SelectedOptions=false;
+      this.AnotherSelectedOption=true;
+      console.log("AnotherSelectedOption", this.AnotherSelectedOption);
+    } 
   }
 
-  closeModalDialog(){
-    console.log("it been closed");
-    this.display="none";
+  getQuestionsById(id:any){
+  
+    this.questionService.getQuestionsById(id)
+    .subscribe((ques)=>{
+     this.quesset=ques;
+     this.questionService.quesData =ques;
+     console.log("data from one id",ques);
+     console.log("question by id is getting",id,this._form);
+    })
   }
-
-
-  // resetForm(form?: NgForm) {
-
-  //   if (form != null)
-  //     form.reset();
-
-  //   this.questionService.selectedQuestionType.emit({
-  //     key: 0,
-  //     title:'',
-  //     type:''
-
-  //   });
-  // }
-
-  // deleteQuestions(form:NgForm) {
-  //   if (confirm('Are you sure to delete this record ?') == true) {
-  //    console.log(form.value);
-  //     this.questionService.deleteQuestions(form.value.id).subscribe(response => {
-  //       console.log(response);
-  //       // this.refetchEvents();
-  //     })
-  //   }
-  // }
 
 }
