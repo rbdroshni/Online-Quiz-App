@@ -6,7 +6,7 @@ const QuizSchema=mongoose.Schema({
     type:String,
     optionsArray:[{
     optText:String,
-    isCorrect:Boolean 
+    isCorrect:String 
     }]    
 })
 
