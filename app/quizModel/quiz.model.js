@@ -6,8 +6,9 @@ const QuizSchema=mongoose.Schema({
     type:String,
     optionsArray:[{
     optText:String,
-    isCorrect:String 
-    }]    
+    isCorrect:Boolean 
+    }],
+    created_at:Date    
 })
 
 module.exports=mongoose.model('Quiz',QuizSchema);

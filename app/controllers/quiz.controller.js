@@ -18,7 +18,8 @@ exports.create = (req, res) => {
         id: req.body._id,
         title: req.body.title,
         type: req.body.type,
-        optionsArray: req.body.optionsArray
+        optionsArray: req.body.optionsArray,
+        created_at:new Date()
     });
 
     //Save quiz in the database
