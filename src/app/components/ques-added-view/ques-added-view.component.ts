@@ -20,6 +20,7 @@ export class QuesAddedViewComponent implements OnInit {
   // selectedQuiz:QuestionType;
   quesset:any=[];
   display: boolean = false;
+  isOption:boolean =false;
   
   _form :any= {
     key: 0,
@@ -47,13 +48,15 @@ export class QuesAddedViewComponent implements OnInit {
   showDialog(id?:any,_form?:any) {
   
     if(id){
+      this._form =_form
+      this.isOption = true
 
-      this.quesservice.getQuestionsById(id)
-      .subscribe((ques)=>{
-        this._form=ques;
-        console.log("testing id",id);
-        console.log("testing data",ques);
-      })
+      // this.quesservice.getQuestionsById(id)
+      // .subscribe((ques)=>{
+      //   this._form=ques;
+      //   console.log("testing id",id);
+      //   console.log("testing data",ques);
+      // })
       // for(let i in this.quesset){
 
       //   console.log("teting for",i);
@@ -67,6 +70,16 @@ export class QuesAddedViewComponent implements OnInit {
       this.quesservice.display = true; 
     }
    else{ 
+    this.isOption = false
+    this._form ={
+      key: 1,
+      title: '',
+      type:'',
+      optionsArray:[
+      
+      ]
+}
+
      this.quesservice.display=true;
    }  
 }

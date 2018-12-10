@@ -1,5 +1,6 @@
 <div>
     <h3>Questions Form</h3>
+    {{quesset}}
     <form form="NgForm" name="id" (ngSubmit)="OnSubmit(form)">
     <input type="text" name="id" hidden key="ngModel" [(ngModel)]="_form.key">
      <div>
@@ -21,7 +22,7 @@
      <ol> 
           <li *ngFor="let key of _form.optionsArray">
               {{key.optText}}    
-            <input type="checkbox" name="isCorrect" [value]="key.optText" (change)="optionChecked(key.optText,$event)">
+            <input type="checkbox" name="isCorrect" [(ngModel)]="key.isCorrect"  [value]="key.optText" (change)="optionChecked(key.isCorrect,key.optText)">
             <button (click)="DeleteOptions(key.optText)">-</button>
           </li>
       </ol>
@@ -38,7 +39,7 @@
             <input type="submit" id="submit-button" value="Submit" />
          </div> 
    </div>
-   <div *ngIf="AnotherSelectedOption||SelectedOptions" ></div> 
+   <!-- <div *ngIf="AnotherSelectedOption||SelectedOptions" ></div>  -->
         
 </form>
 

@@ -13,32 +13,33 @@ import { QuesAddedViewComponent } from '../ques-added-view/ques-added-view.compo
   styleUrls: ['./ques-entry-form.component.css']
 })
 export class QuesEntryFormComponent implements OnInit {
-  SelectedOptions:Boolean=false;
+  //SelectedOptions:Boolean=false;
   AnotherSelectedOption:Boolean=false;
   QuesType:any=[];
 
-  @Input() quesset:any=[];
-
+  @Input() _form:any={};
+  @Input() SelectedOptions:Boolean =false
 
   EventsHasError = true;
 
   options:any="";
   answers:any="";
 
-  _form = {
+  _form2 = {
     key: 1,
     title: '',
     type:'',
     optionsArray:[
       {
         optText:'',
-        isCorrect:''
+        isCorrect:false
       }
     ]
   }
 
   constructor(public questionService:QuesService) { 
 
+    
     this.QuesType = [
       {
         "id": "1",
@@ -56,29 +57,31 @@ export class QuesEntryFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    
     this._form.optionsArray=[];
     console.log("testing get data at ui",this.questionService.quesData)
   }
 
   AddOptions(){
+    
     console.log(this._form.optionsArray);
     console.log(this.options+" "+this.answers);
-    this._form.optionsArray.push({optText:this.options,isCorrect:this.answers});
+    this._form.optionsArray.push({optText:this.options,isCorrect:false});
     this.options="";
   //  this.answers=false;
   //  console.log("chexkbox",+this.answers);
   }
 
-  optionChecked(value:any,event){
+  optionChecked(value:any,data){
    let index;
-   if(event.target.checked){
+   if(value){
     //  let tempArray=[];
     // tempArray.push({optText:this.options,isCorrect:value});
 
     
      console.log("checked");
-     index= this._form.optionsArray.findIndex(x=>{return x.optText == value})
-     this._form.optionsArray[index]={optText:value,isCorrect:value}
+     index= this._form.optionsArray.findIndex(x=>{return x.optText == data})
+     this._form.optionsArray[index]={optText:data,isCorrect:value}
      console.log(" result options",this._form.optionsArray);
      console.log(index,"index");
 
@@ -86,8 +89,8 @@ export class QuesEntryFormComponent implements OnInit {
 
    }
    else{
-    index= this._form.optionsArray.findIndex(x=>{return x.optText == value})
-    this._form.optionsArray[index]={optText:value,isCorrect:""}
+    index= this._form.optionsArray.findIndex(x=>{return x.optText == data})
+    this._form.optionsArray[index]={optText:data,isCorrect:value}
     console.log("else case",this._form.optionsArray);
     console.log(value,event,"option unchecked");
     console.log("unchecked ",null);
@@ -129,9 +132,19 @@ export class QuesEntryFormComponent implements OnInit {
   OnSubmit(form:NgForm) {
     console.log(this._form);
     this.questionService.display=false;
+    var datatoinsert =[]
+// for(var i=0;i<this._form.optionsArray.length;i++){
+//   var obj = this._form.optionsArray[i]
+//   if(obj.isCorrect){
+//     datatoinsert.push(obj)
+//   }
+// }
+
+//this._form.optionsArray = datatoinsert
+
     this.questionService.addQuestions(this._form)
     .subscribe((data)=>{
-     
+      location.reload();
       console.log("hello",data);
     })
    
@@ -141,7 +154,7 @@ export class QuesEntryFormComponent implements OnInit {
     //   console.log(questions);
       
     // })
-    location.reload();
+   
     // alert('question has added');
     this.resetForm(form);
   }
@@ -165,7 +178,7 @@ export class QuesEntryFormComponent implements OnInit {
   
     this.questionService.getQuestionsById(id)
     .subscribe((ques)=>{
-     this.quesset=ques;
+ 
      this.questionService.quesData =ques;
      console.log("data from one id",ques);
      console.log("question by id is getting",id,this._form);
