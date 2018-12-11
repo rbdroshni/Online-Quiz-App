@@ -1,7 +1,7 @@
 <div>
     <h3>Questions Form</h3>
     {{quesset}}
-    <form form="NgForm" name="id" (ngSubmit)="OnSubmit(form)">
+    <form _form="NgForm" name="id" (ngSubmit)="OnSubmit(_form,_form._id)">
     <input type="text" name="id" hidden key="ngModel" [(ngModel)]="_form.key">
      <div>
        <label>Question Title:</label>
@@ -21,7 +21,7 @@
    <div *ngIf="SelectedOptions">
      <ol> 
           <li *ngFor="let key of _form.optionsArray">
-              {{key.optText}}    
+             <input placeholder="options" [(ngModel)]="key.optText" [ngModelOptions]="{standalone: true}">   
             <input type="checkbox" name="isCorrect" [(ngModel)]="key.isCorrect"  [value]="key.optText" (change)="optionChecked(key.isCorrect,key.optText)">
             <button (click)="DeleteOptions(key.optText)">-</button>
           </li>

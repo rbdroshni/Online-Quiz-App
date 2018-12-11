@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { FormGroup,FormBuilder,FormArray,FormControl,Validators } from '@angular/forms';
@@ -18,7 +18,8 @@ export class QuesEntryFormComponent implements OnInit {
   QuesType:any=[];
 
   @Input() _form:any={};
-  @Input() SelectedOptions:Boolean =false
+  @Input() SelectedOptions:Boolean =false;
+  // @Output() addQuestions =new EventEmitter<{_form}>();
 
   EventsHasError = true;
 
@@ -59,7 +60,7 @@ export class QuesEntryFormComponent implements OnInit {
   ngOnInit() {
     
     this._form.optionsArray=[];
-    console.log("testing get data at ui",this.questionService.quesData)
+    // console.log("testing get data at ui",this.questionService.quesData)
   }
 
   AddOptions(){
@@ -75,17 +76,15 @@ export class QuesEntryFormComponent implements OnInit {
   optionChecked(value:any,data){
    let index;
    if(value){
-    //  let tempArray=[];
-    // tempArray.push({optText:this.options,isCorrect:value});
-
     
+
      console.log("checked");
      index= this._form.optionsArray.findIndex(x=>{return x.optText == data})
      this._form.optionsArray[index]={optText:data,isCorrect:value}
      console.log(" result options",this._form.optionsArray);
      console.log(index,"index");
 
-    // console.log("checked ",tempArray);
+    
 
    }
    else{
@@ -129,10 +128,35 @@ export class QuesEntryFormComponent implements OnInit {
     
   }
 
-  OnSubmit(form:NgForm) {
-    console.log(this._form);
+  OnSubmit(form:any,id:any) {
+    console.log("getting form",form);
     this.questionService.display=false;
-    var datatoinsert =[]
+    var datatoinsert =[];
+
+    if(form['_id']){
+      console.log("inside if",id)
+      this.questionService.editQuestions(id,form).subscribe((data)=>{
+        console.log("inside edit api",data);
+      })
+
+      
+    } else{
+      console.log("INSIDE ELSE");
+      this.questionService.addQuestions(this._form).subscribe((data)=>{
+        // location.reload();
+        
+      })
+    }
+
+    // this.questionService.getQuestions()
+    // .subscribe((questions)=>{
+    //   this._form.optionsArray=questions
+    //   console.log("get questions api hit",questions);
+      
+    // })
+    
+    
+
 // for(var i=0;i<this._form.optionsArray.length;i++){
 //   var obj = this._form.optionsArray[i]
 //   if(obj.isCorrect){
@@ -142,20 +166,13 @@ export class QuesEntryFormComponent implements OnInit {
 
 //this._form.optionsArray = datatoinsert
 
-    this.questionService.addQuestions(this._form)
-    .subscribe((data)=>{
-      location.reload();
-      console.log("hello",data);
-    })
-   
-    // this.questionService.getQuestions()
-    // .subscribe((questions)=>{
-    //   this.quesset=questions
-    //   console.log(questions);
-      
-    // })
+    
+  
+   location.reload();
    
     // alert('question has added');
+
+   
     this.resetForm(form);
   }
 
@@ -169,20 +186,19 @@ export class QuesEntryFormComponent implements OnInit {
     } 
     else if(options=="input text"){
       this.SelectedOptions=false;
-      this.AnotherSelectedOption=true;
+      // this.AnotherSelectedOption=true;
       console.log("AnotherSelectedOption", this.AnotherSelectedOption);
     } 
   }
 
-  getQuestionsById(id:any){
+  // getQuestionsById(id:any){
   
-    this.questionService.getQuestionsById(id)
-    .subscribe((ques)=>{
- 
-     this.questionService.quesData =ques;
-     console.log("data from one id",ques);
-     console.log("question by id is getting",id,this._form);
-    })
-  }
+  //   this.questionService.getQuestionsById(id)
+  //   .subscribe((ques)=>{
+  //    this.questionService.quesData =ques;
+  //    console.log("data from one id",ques);
+  //    console.log("question by id is getting",id,this._form);
+  //   })
+  // }
 
 }
