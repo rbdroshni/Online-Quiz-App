@@ -15,6 +15,7 @@ export class QuesService {
   // _quesList:QuestionType[]=[];
 
   public display:boolean=false;
+  
  
   selectedQuestionType=new EventEmitter<QuestionType>();
 
@@ -45,7 +46,7 @@ export class QuesService {
    }
 
 
-    editQuestions(id:any,form:NgForm){
+    editQuestions(form:NgForm){
     //   const quiz= {
     //     title:title,
     //    type:type,
@@ -55,7 +56,7 @@ export class QuesService {
     //    }]
     //  }
        console.log("edit is working");
-       return this._http.put(`${this.uri}/quizes/${id}`,+ form);
+       return this._http.post(`${this.uri}/quizesupdate`, form);
      }
 
 

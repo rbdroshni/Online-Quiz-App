@@ -21,7 +21,7 @@ export class QuesAddedViewComponent implements OnInit {
   quesset:any=[];
   display: boolean = false;
   isOption:boolean =false;
-  
+  isEdit = false
   _form :any= {
     key: 0,
     title: '',
@@ -48,6 +48,7 @@ export class QuesAddedViewComponent implements OnInit {
   showDialog(id?:any,_form?:any) {
   
     if(id){
+      this.isEdit = true
       this._form =_form
       this.isOption = true
 
@@ -103,17 +104,7 @@ getQuestionsById(id:any){
   })
 }
 
-  editQuestions(_id:any,_form:NgForm) {
-    // console.log("test",_id);
-    // this.showDialog(_form);
-    {  
-    this.quesservice.editQuestions(_id,_form)
-      .subscribe((data) => {
-        console.log(data);
-      });
-    }
-    alert(_id + ' has been updated');
-  }
+  
 
   deleteQuestions(id:any) {
     if (confirm('Are you sure to delete this record ?') == true) {

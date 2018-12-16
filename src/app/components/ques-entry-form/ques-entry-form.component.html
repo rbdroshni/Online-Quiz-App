@@ -20,9 +20,15 @@
 
    <div *ngIf="SelectedOptions">
      <ol> 
-          <li *ngFor="let key of _form.optionsArray">
-              {{key.optText}}    
-            <input type="checkbox" name="isCorrect" [(ngModel)]="key.isCorrect"  [value]="key.optText" (change)="optionChecked(key.isCorrect,key.optText)">
+          <li *ngFor="let key of _form.optionsArray;let i=index">
+             <p *ngIf="!isEditable"> {{key.optText}}  </p>
+             <input *ngIf="isEditable" type="text" placeholder="option" name="optText" name="check3{{i}}" id="K{{i}}" [(ngModel)]="key.optText">
+            +<input 
+            *ngIf="_form.type == 'Multiple Options' " type="checkbox"  name="check{{i}}" id="a{{i}}" [(ngModel)]="key.isCorrect" [value]="key.optText" (change)="optionChecked(key.isCorrect,key.optText)">
+
+            <input *ngIf="_form.type != 'Multiple Options'"  type="checkbox" name="check1{{i}}" id="{{i}}"  [value]="key.optText" [(ngModel)]="key.isCorrect" (change)="forsingle(i)" />
+
+
             <button (click)="DeleteOptions(key.optText)">-</button>
           </li>
       </ol>
@@ -36,7 +42,8 @@
 
           <div class="form-group">
             <input type="reset" id="reset-button" value="Reset"/>
-            <input type="submit" id="submit-button" value="Submit" />
+            <input  type="submit" *ngIf="!isEditable" id="submit-button" value="Submit" />
+            <input  type="button" *ngIf="isEditable" id="submit-button" value="Update"  (click)="DataUpdate()"   />
          </div> 
    </div>
    <!-- <div *ngIf="AnotherSelectedOption||SelectedOptions" ></div>  -->

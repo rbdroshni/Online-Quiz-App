@@ -19,6 +19,8 @@ export class QuesEntryFormComponent implements OnInit {
 
   @Input() _form:any={};
   @Input() SelectedOptions:Boolean =false
+  @Input() isEditable:Boolean =false
+  
 
   EventsHasError = true;
 
@@ -72,7 +74,25 @@ export class QuesEntryFormComponent implements OnInit {
   //  console.log("chexkbox",+this.answers);
   }
 
-  optionChecked(value:any,data){
+
+  forsingle(id) {
+
+    
+    for(var i=0;i<this._form.optionsArray.length;i++){
+      let x = "" + i;
+      let a =  document.getElementById(x);
+        a['checked'] = false;
+        this._form.optionsArray[i].isCorrect =false;
+    }
+
+    let y="" + id;
+    let b= document.getElementById(y);
+    b['checked']= true;
+    this._form.optionsArray[id].isCorrect=true;
+
+  }
+
+  optionChecked(value:any,data){  
    let index;
    if(value){
     //  let tempArray=[];
@@ -97,6 +117,20 @@ export class QuesEntryFormComponent implements OnInit {
    }
     
   }
+
+  DataUpdate(_id:any,_form:NgForm) {
+    
+    // console.log("test",_id);
+    // this.showDialog(_form);
+    this.questionService.editQuestions(this._form)
+      .subscribe((data) => {
+        this.questionService.display=false;
+        console.log(data);
+      });
+    
+  }
+
+  
 
 
   DeleteOptions(optText){
@@ -158,9 +192,24 @@ export class QuesEntryFormComponent implements OnInit {
     // alert('question has added');
     this.resetForm(form);
   }
-
+  SingleOptions=false
 
   OnClick(options) {
+
+
+
+
+
+
+    if(options=="Single Options"){
+      this.SingleOptions=true;
+      console.log("single option selected")
+      }
+      else
+      {
+        this.SingleOptions=false
+      }
+
 
     console.log(options);
     if((options=="Single Options")||(options=="Multiple Options")){
