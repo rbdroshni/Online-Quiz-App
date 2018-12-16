@@ -6,7 +6,7 @@
     
  <p-dialog  [(visible)]="quesservice.display">
      <span id="dailog-box">
-        <button type="button" style="float:right;" pButton icon="pi pi-close" (click)="quesservice.display=false"label="Yes">close</button>
+        <button type="button" style="float:right;" pButton icon="pi pi-close" (click)="quesservice.display=false" label="Yes">close</button>
      <!-- <app-ques-form></app-ques-form>    -->
      <app-ques-entry-form [isEditable]="isEdit" [SelectedOptions]="isOption" [_form]="_form"></app-ques-entry-form>
      </span>
@@ -34,11 +34,20 @@
             <td>{{qset.title}}</td>
             <td>{{qset.type}}</td>
             <td>
+<<<<<<< HEAD
             <tr *ngFor="let options of qset.optionsArray ">
               <td >{{options.optText}}</td>
               <!-- <td></td>
               <td></td>
               <td *ngIf="options.isCorrect">{{options.optText}}</td> -->
+=======
+            <tr *ngFor="let options of qset.optionsArray, let j=index ">
+              <td>{{j+1}}</td>
+              <td>{{options.optText}}</td>
+              
+              <td></td>
+              <td *ngIf="options.isCorrect">{{options.optText}}</td>
+>>>>>>> b5452efc9f8afeba60ed6dd0761ce0a7412078ed
            </tr>
           </td>
           <td>

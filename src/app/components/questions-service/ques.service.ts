@@ -17,19 +17,19 @@ export class QuesService {
   public display:boolean=false;
   
  
-  selectedQuestionType=new EventEmitter<QuestionType>();
+  // selectedQuestionType=new EventEmitter<QuestionType>();
 
   uri = 'http://localhost:3000';
   constructor(private _http:HttpClient) {}
 
 
 
-  public get quesData() : any {    
-    return QuesService.quesData  
-  }
-  public set quesData(v : any) {    
-  QuesService.quesData = v  
-  }
+  // public get quesData() : any {    
+  //   return QuesService.quesData  
+  // }
+  // public set quesData(v : any) {    
+  // QuesService.quesData = v  
+  // }
 
  
     addQuestions(_form){
@@ -55,12 +55,15 @@ export class QuesService {
     //    isCorrect:isCorrect 
     //    }]
     //  }
+<<<<<<< HEAD
        console.log("edit is working");
        return this._http.post(`${this.uri}/quizesupdate`, form);
+=======
+       console.log("edit is working",id);
+       return this._http.put(`${this.uri}/quizes/${id}`,form);
+>>>>>>> b5452efc9f8afeba60ed6dd0761ce0a7412078ed
      }
 
-
-  
     deleteQuestions(id:any){
       console.log("delete is working",+ id)
       return this._http.delete(`${this.uri}/quizes/${id}`); 
