@@ -10,14 +10,15 @@ module.exports=(app)=>{
     //Retrieve all quizes
 
     app.get('/quizes',quizes.findAll);
+    app.post('/quizesupdate',quizes.update  );
 
     //Retrieve one quiz with quizId
 
     app.get('/quizes/:quizId',quizes.findOne);
 
-    //Update a quiz with quizId
+    //Update a quiz with quizId 
 
-    app.put('/quizes/:quizId',quizes.update);
+   // app.put('/quizes/:quizId',quizes.update);
 
     //Delete a quiz with quizId
     app.delete('/quizes/:quizId',quizes.delete);

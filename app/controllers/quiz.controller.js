@@ -41,7 +41,7 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
 
-    Quiz.find()
+    Quiz.find().sort({created_at:-1})
         .then(quizes => {
             res.send(quizes);
             console.log(quizes);
@@ -51,6 +51,32 @@ exports.findAll = (req, res) => {
             })
         })
 };
+
+
+exports.quizUpdate= (req, res) => {
+
+    var option = req.body.optionsArray
+    var title = req.body.title
+    var type = req.body.type
+    
+
+    Quiz.findByIdAndUpdate(req.body._id,{
+        $set:{
+            optionsArray: option,
+            type:type,
+            title:title
+        }
+    }).then(quizes => {
+        res.send(quizes);
+        console.log(quizes);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "some error occur while retreiving quizes"
+        })
+    })
+        
+};
+
 
 
 //Find a single quiz with a quizId
@@ -87,7 +113,7 @@ exports.findOne = (req, res) => {
 
 exports.update=(req,res)=>{
     //Validate request
-    if(!req.params.quizId){
+    if(!req.body._id){
         return res.status(400).send({
             message:"Note content can not be empty"
         });
@@ -95,7 +121,7 @@ exports.update=(req,res)=>{
     
     //find quiz and update it with the request body
     
-    Quiz.findByIdAndUpdate(req.params.quizId,{
+    Quiz.findByIdAndUpdate(req.body._id,{
          title:req.body.title||"Untitled quiz",
         type:req.body.type,
         optionsArray:req.body.optionsArray
@@ -106,7 +132,7 @@ exports.update=(req,res)=>{
     .then(quiz=>{
         if(!quiz){
             return res.status(404).send({
-                message:"Quiz not found with id " + req.params.quizId
+                message:"Quiz not found with id " + req.body._id
             })
         }
     
