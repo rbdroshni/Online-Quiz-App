@@ -4,9 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {NgForm} from '@angular/forms'
 import {QuesEntryFormComponent} from '../ques-entry-form/ques-entry-form.component';
 import {QuesService} from '../questions-service/ques.service';
-// import {QuestionType} from '../questions-service/questions.model';
-// import {QuesSet} from './questionset' 
-// import {QuesFormComponent} from '../ques-form/ques-form.component';
+
 
 
 @Component({
@@ -17,7 +15,6 @@ import {QuesService} from '../questions-service/ques.service';
 
 export class QuesAddedViewComponent implements OnInit {
   
-  // selectedQuiz:QuestionType;
   quesset:any=[];
   display: boolean = false;
   isOption:boolean =false;
@@ -38,7 +35,7 @@ export class QuesAddedViewComponent implements OnInit {
   constructor(public quesservice:QuesService ) {
     this.quesset=[];
     this._form;
-    // this.getQuestionsById;
+    
   }
 
   ngOnInit() {
@@ -55,11 +52,8 @@ export class QuesAddedViewComponent implements OnInit {
       this.quesservice.getQuestionsById(id)
       .subscribe((ques)=>{
         this._form=ques;
-        console.log("testing id",id);
-        console.log("testing data",ques);
+       
       })
-     
-
       this.quesservice.display = true; 
     }
    else{ 
@@ -69,7 +63,6 @@ export class QuesAddedViewComponent implements OnInit {
       title: '',
       type:'',
       optionsArray:[
-      
       ]
 }
 
@@ -85,39 +78,12 @@ getQuestions(){
   })
 }
 
-// getQuestionsById(id:any){
-  
-//   this.quesservice.getQuestionsById(id)
-//   .subscribe((ques)=>{
-//    this._form=ques;
-//    this.quesservice.quesData =ques;
-//    console.log("data from one id",ques);
-//    console.log("question by id is getting",id,this._form);
-//   })
-// }
-
-<<<<<<< HEAD
-  
-=======
-
-  // editQuestions(_id:any,_form:NgForm) {
-    
-  //   {  
-  //   this.quesservice.editQuestions(_id,_form)
-  //     .subscribe((data) => {
-  //       console.log(data);
-  //     });
-  //   }
-  //   alert(_id + ' has been updated');
-  // }
->>>>>>> b5452efc9f8afeba60ed6dd0761ce0a7412078ed
-
   deleteQuestions(id:any) {
     if (confirm('Are you sure to delete this record ?') == true) {
      console.log("delete test",+id);
       this.quesservice.deleteQuestions(id).subscribe(response => {
         console.log(response);
-        // this.refetchEvents();
+       
         location.reload();
       })
     }

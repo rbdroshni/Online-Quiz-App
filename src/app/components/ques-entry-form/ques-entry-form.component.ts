@@ -4,7 +4,7 @@ import { NgForm } from '@angular/forms';
 import { FormGroup,FormBuilder,FormArray,FormControl,Validators } from '@angular/forms';
 import { QuesService } from '../questions-service/ques.service';
 import { Options } from 'selenium-webdriver/ie';
-// import { QuestionType } from '../questions-service/questions.model'
+
 import { QuesAddedViewComponent } from '../ques-added-view/ques-added-view.component'
 
 @Component({
@@ -13,20 +13,15 @@ import { QuesAddedViewComponent } from '../ques-added-view/ques-added-view.compo
   styleUrls: ['./ques-entry-form.component.css']
 })
 export class QuesEntryFormComponent implements OnInit {
-  //SelectedOptions:Boolean=false;
+ 
   AnotherSelectedOption:Boolean=false;
   QuesType:any=[];
 
   @Input() _form:any={};
-<<<<<<< HEAD
   @Input() SelectedOptions:Boolean =false
   @Input() isEditable:Boolean =false
   
-=======
-  @Input() SelectedOptions:Boolean =false;
-  // @Output() addQuestions =new EventEmitter<{_form}>();
->>>>>>> b5452efc9f8afeba60ed6dd0761ce0a7412078ed
-
+  titleBlank:boolean=true;
   EventsHasError = true;
 
   options:any="";
@@ -66,17 +61,12 @@ export class QuesEntryFormComponent implements OnInit {
   ngOnInit() {
     
     this._form.optionsArray=[];
-    // console.log("testing get data at ui",this.questionService.quesData)
   }
 
   AddOptions(){
     
-    console.log(this._form.optionsArray);
-    console.log(this.options+" "+this.answers);
     this._form.optionsArray.push({optText:this.options,isCorrect:false});
     this.options="";
-  //  this.answers=false;
-  //  console.log("chexkbox",+this.answers);
   }
 
 
@@ -121,10 +111,7 @@ export class QuesEntryFormComponent implements OnInit {
     
   }
 
-  DataUpdate(_id:any,_form:NgForm) {
-    
-    // console.log("test",_id);
-    // this.showDialog(_form);
+  DataUpdate(_form:NgForm) {
     this.questionService.editQuestions(this._form)
       .subscribe((data) => {
         this.questionService.display=false;
@@ -134,8 +121,6 @@ export class QuesEntryFormComponent implements OnInit {
   }
 
   
-
-
   DeleteOptions(optText){
     console.log(optText);
     for(var i=0;i<this._form.optionsArray.length;i++){
@@ -144,7 +129,6 @@ export class QuesEntryFormComponent implements OnInit {
       }
     }
   }
-
  
   validateQuestions(value) {
     if (value == 'default') {
@@ -162,18 +146,31 @@ export class QuesEntryFormComponent implements OnInit {
     this._form.type=null;
     this.options=null;
     this.answers=null
-    this._form.optionsArray=[];
-    
+    this._form.optionsArray=[]; 
   }
+
 
   OnSubmit(form:any,id:any) {
     console.log("getting form",form);
-    this.questionService.display=false;
-    var datatoinsert =[];
+   
+   
+    if(this._form.title==""){
+      console.log("inside title")
+      this.titleBlank=false;
+    }
+    else{
+
+    this.titleBlank=true;
+    }
+
+    if(!this.titleBlank){
+
+     console.log("error in the title");
+    }else{
 
     if(form['_id']){
       console.log("inside if",id)
-      this.questionService.editQuestions(id,form).subscribe((data)=>{
+      this.questionService.editQuestions(form).subscribe((data)=>{
         console.log("inside edit api",data);
       })
 
@@ -181,77 +178,38 @@ export class QuesEntryFormComponent implements OnInit {
     } else{
       console.log("INSIDE ELSE");
       this.questionService.addQuestions(this._form).subscribe((data)=>{
-        // location.reload();
-        
+      
       })
     }
-
-    // this.questionService.getQuestions()
-    // .subscribe((questions)=>{
-    //   this._form.optionsArray=questions
-    //   console.log("get questions api hit",questions);
-      
-    // })
-    
-    
-
-// for(var i=0;i<this._form.optionsArray.length;i++){
-//   var obj = this._form.optionsArray[i]
-//   if(obj.isCorrect){
-//     datatoinsert.push(obj)
-//   }
-// }
-
-//this._form.optionsArray = datatoinsert
-
-    
-  
-   location.reload();
-   
-    // alert('question has added');
-
-   
-    this.resetForm(form);
+    this.questionService.display=false;
   }
-  SingleOptions=false
+   
+  }
+
+
+  SingleOptions=false;
 
   OnClick(options) {
 
-
-
-
-
-
     if(options=="Single Options"){
       this.SingleOptions=true;
-      console.log("single option selected")
+     
       }
       else
       {
         this.SingleOptions=false
       }
 
-
-    console.log(options);
+   
     if((options=="Single Options")||(options=="Multiple Options")){
       this.SelectedOptions=true;
-      console.log("SelectedOptions ", this.SelectedOptions);
+     
     } 
     else if(options=="input text"){
       this.SelectedOptions=false;
-      // this.AnotherSelectedOption=true;
-      console.log("AnotherSelectedOption", this.AnotherSelectedOption);
+      
     } 
   }
 
-  // getQuestionsById(id:any){
-  
-  //   this.questionService.getQuestionsById(id)
-  //   .subscribe((ques)=>{
-  //    this.questionService.quesData =ques;
-  //    console.log("data from one id",ques);
-  //    console.log("question by id is getting",id,this._form);
-  //   })
-  // }
 
 }

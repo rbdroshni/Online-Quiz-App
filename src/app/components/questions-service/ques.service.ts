@@ -47,21 +47,9 @@ export class QuesService {
 
 
     editQuestions(form:NgForm){
-    //   const quiz= {
-    //     title:title,
-    //    type:type,
-    //    optionsArray:[{
-    //    optText:optText,
-    //    isCorrect:isCorrect 
-    //    }]
-    //  }
-<<<<<<< HEAD
+    
        console.log("edit is working");
        return this._http.post(`${this.uri}/quizesupdate`, form);
-=======
-       console.log("edit is working",id);
-       return this._http.put(`${this.uri}/quizes/${id}`,form);
->>>>>>> b5452efc9f8afeba60ed6dd0761ce0a7412078ed
      }
 
     deleteQuestions(id:any){

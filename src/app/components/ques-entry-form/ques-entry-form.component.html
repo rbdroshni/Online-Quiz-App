@@ -1,11 +1,13 @@
 <div>
     <h3>Questions Form</h3>
     {{quesset}}
-    <form _form="NgForm" name="id" (ngSubmit)="OnSubmit(_form,_form._id)">
+    <form _form="NgForm" name="form" (ngSubmit)="OnSubmit(_form,_form._id)" >
     <input type="text" name="id" hidden key="ngModel" [(ngModel)]="_form.key">
      <div>
-       <label>Question Title:</label>
-       <input type="text" placeholder="Enter Question" name="title" [(ngModel)]="_form.title">
+       <label for="title">Question Title:</label>
+       <input type="text" placeholder="Enter Question" id="title" name="title" [(ngModel)]="_form.title">
+       <small *ngIf="!titleBlank">Title is required</small>
+
     </div>
 
     <div>
@@ -20,36 +22,35 @@
 
    <div *ngIf="SelectedOptions">
      <ol> 
-<<<<<<< HEAD
           <li *ngFor="let key of _form.optionsArray;let i=index">
              <p *ngIf="!isEditable"> {{key.optText}}  </p>
-             <input *ngIf="isEditable" type="text" placeholder="option" name="optText" name="check3{{i}}" id="K{{i}}" [(ngModel)]="key.optText">
-            +<input 
-            *ngIf="_form.type == 'Multiple Options' " type="checkbox"  name="check{{i}}" id="a{{i}}" [(ngModel)]="key.isCorrect" [value]="key.optText" (change)="optionChecked(key.isCorrect,key.optText)">
+            <input *ngIf="isEditable" type="text" name="optText" name="check3{{i}}" id="K{{i}}" [(ngModel)]="key.optText">
+
+            <!-- <div *ngIf="optText.errors && (optText.dirty || optText.touched)" class="alert alert-danger">
+              <div [hidden]="!optText.errors.required">
+                option is required!
+              </div>
+            </div> -->
+
+            <input *ngIf="_form.type == 'Multiple Options' " type="checkbox"  name="check{{i}}" id="a{{i}}" [(ngModel)]="key.isCorrect" [value]="key.optText" (change)="optionChecked(key.isCorrect,key.optText)">
 
             <input *ngIf="_form.type != 'Multiple Options'"  type="checkbox" name="check1{{i}}" id="{{i}}"  [value]="key.optText" [(ngModel)]="key.isCorrect" (change)="forsingle(i)" />
 
-
-=======
-          <li *ngFor="let key of _form.optionsArray">
-             <input placeholder="options" [(ngModel)]="key.optText" [ngModelOptions]="{standalone: true}">   
-            <input type="checkbox" name="isCorrect" [(ngModel)]="key.isCorrect"  [value]="key.optText" (change)="optionChecked(key.isCorrect,key.optText)">
->>>>>>> b5452efc9f8afeba60ed6dd0761ce0a7412078ed
             <button (click)="DeleteOptions(key.optText)">-</button>
           </li>
       </ol>
           <div>
-            <input type="text" placeholder="option" name="optText" [(ngModel)]="options">
+            <input type="text" placeholder="Enter your options" name="options"  [(ngModel)]="options" required #myControl="ngModel">
             <!-- <input type="checkbox" name="isCorrect" [(ngModel)]="answers"> -->
             
             <br/>
-            <input type="button" name="Add More" value="Add option" (click)="AddOptions()">
+            <button type="button" name="add" value="Add" (click)="AddOptions()" [disabled]="myControl.invalid" >Add</button>
           </div>
 
           <div class="form-group">
             <input type="reset" id="reset-button" value="Reset"/>
             <input  type="submit" *ngIf="!isEditable" id="submit-button" value="Submit" />
-            <input  type="button" *ngIf="isEditable" id="submit-button" value="Update"  (click)="DataUpdate()"   />
+            <input  type="button" *ngIf="isEditable" id="submit-button" value="Update"  (click)="DataUpdate()"/>
          </div> 
    </div>
    <!-- <div *ngIf="AnotherSelectedOption||SelectedOptions" ></div>  -->
