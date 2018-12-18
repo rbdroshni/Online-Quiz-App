@@ -3,8 +3,9 @@ import {HttpClient} from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { FormGroup,FormBuilder,FormArray,FormControl,Validators } from '@angular/forms';
 import { QuesService } from '../questions-service/ques.service';
-import { Options } from 'selenium-webdriver/ie';
+import { Router,RouterLink} from '@angular/router';
 
+import { Options } from 'selenium-webdriver/ie';
 import { QuesAddedViewComponent } from '../ques-added-view/ques-added-view.component'
 
 @Component({
@@ -17,17 +18,22 @@ export class QuesEntryFormComponent implements OnInit {
   AnotherSelectedOption:Boolean=false;
   QuesType:any=[];
 
+  @Input() getQues:any=[];
   @Input() _form:any={};
   @Input() SelectedOptions:Boolean =false
   @Input() isEditable:Boolean =false
   
+  
   titleBlank:boolean=true;
+  isOptionChecked:boolean=true;
   EventsHasError = true;
+  emptyCheckbox:boolean=false;
 
   options:any="";
   answers:any="";
 
   _form2 = {
+
     key: 1,
     title: '',
     type:'',
@@ -39,9 +45,8 @@ export class QuesEntryFormComponent implements OnInit {
     ]
   }
 
-  constructor(public questionService:QuesService) { 
+  constructor(public router:Router,public questionService:QuesService) { 
 
-    
     this.QuesType = [
       {
         "id": "1",
@@ -69,10 +74,8 @@ export class QuesEntryFormComponent implements OnInit {
     this.options="";
   }
 
-
   forsingle(id) {
-
-    
+ 
     for(var i=0;i<this._form.optionsArray.length;i++){
       let x = "" + i;
       let a =  document.getElementById(x);
@@ -87,19 +90,16 @@ export class QuesEntryFormComponent implements OnInit {
 
   }
 
-  optionChecked(value:any,data){  
+  optionChecked(value:any,data){
+  
    let index;
-   if(value){
+   if( value){
     
-
      console.log("checked");
      index= this._form.optionsArray.findIndex(x=>{return x.optText == data})
      this._form.optionsArray[index]={optText:data,isCorrect:value}
      console.log(" result options",this._form.optionsArray);
      console.log(index,"index");
-
-    
-
    }
    else{
     index= this._form.optionsArray.findIndex(x=>{return x.optText == data})
@@ -120,7 +120,6 @@ export class QuesEntryFormComponent implements OnInit {
     
   }
 
-  
   DeleteOptions(optText){
     console.log(optText);
     for(var i=0;i<this._form.optionsArray.length;i++){
@@ -138,7 +137,6 @@ export class QuesEntryFormComponent implements OnInit {
     }
   }
 
-
   resetForm(form?:NgForm){
     if(form !=null)
     this._form.key=null;
@@ -151,19 +149,38 @@ export class QuesEntryFormComponent implements OnInit {
 
 
   OnSubmit(form:any,id:any) {
-    console.log("getting form",form);
+  
+    let count=0;
    
-   
+  for(var i=0;i<this._form.optionsArray.length;i++){
+
+   if(this._form.optionsArray[i]["isCorrect"]!=""){
+     console.log("options is selected")
+     count++;
+    
+     }
+  }
+  if(count==0){
+    this.emptyCheckbox=true;
+    console.log("inside count=0",this.emptyCheckbox);
+  }
+  else{
+    this.emptyCheckbox=false;
+  }
+  console.log("Count=",count);
+
     if(this._form.title==""){
       console.log("inside title")
       this.titleBlank=false;
+      
     }
     else{
-
+    
     this.titleBlank=true;
+   
     }
 
-    if(!this.titleBlank){
+    if((!this.titleBlank ) || this.emptyCheckbox){
 
      console.log("error in the title");
     }else{
@@ -174,19 +191,27 @@ export class QuesEntryFormComponent implements OnInit {
         console.log("inside edit api",data);
       })
 
-      
-    } else{
-      console.log("INSIDE ELSE");
-      this.questionService.addQuestions(this._form).subscribe((data)=>{
-      
-      })
     }
+      else{
+
+      // this.questionService.quesset.push(this._form);
+      this.questionService.addQuestions(this._form).subscribe((data)=>{
+      })
+      this.questionService.getQuestions()
+      .subscribe((questions)=>{
+        console.log("inside service",this.questionService.quesset);
+        this.questionService.quesset=questions
+        
+        // this.questionService.quesset=[...this.questionService.quesset]
+        console.log("inside1121 service",this.questionService.quesset);
+        console.log(questions);
+      })
+      this.router.navigate(['/']);
+    }
+
     this.questionService.display=false;
   }
-   
-  }
-
-
+}
   SingleOptions=false;
 
   OnClick(options) {
@@ -200,7 +225,6 @@ export class QuesEntryFormComponent implements OnInit {
         this.SingleOptions=false
       }
 
-   
     if((options=="Single Options")||(options=="Multiple Options")){
       this.SelectedOptions=true;
      
@@ -210,6 +234,4 @@ export class QuesEntryFormComponent implements OnInit {
       
     } 
   }
-
-
 }

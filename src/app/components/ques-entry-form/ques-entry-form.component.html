@@ -26,23 +26,16 @@
              <p *ngIf="!isEditable"> {{key.optText}}  </p>
             <input *ngIf="isEditable" type="text" name="optText" name="check3{{i}}" id="K{{i}}" [(ngModel)]="key.optText">
 
-            <!-- <div *ngIf="optText.errors && (optText.dirty || optText.touched)" class="alert alert-danger">
-              <div [hidden]="!optText.errors.required">
-                option is required!
-              </div>
-            </div> -->
-
             <input *ngIf="_form.type == 'Multiple Options' " type="checkbox"  name="check{{i}}" id="a{{i}}" [(ngModel)]="key.isCorrect" [value]="key.optText" (change)="optionChecked(key.isCorrect,key.optText)">
-
+        
             <input *ngIf="_form.type != 'Multiple Options'"  type="checkbox" name="check1{{i}}" id="{{i}}"  [value]="key.optText" [(ngModel)]="key.isCorrect" (change)="forsingle(i)" />
-
             <button (click)="DeleteOptions(key.optText)">-</button>
+            
           </li>
+          <small *ngIf="emptyCheckbox">At least one answers is required</small>
       </ol>
           <div>
-            <input type="text" placeholder="Enter your options" name="options"  [(ngModel)]="options" required #myControl="ngModel">
-            <!-- <input type="checkbox" name="isCorrect" [(ngModel)]="answers"> -->
-            
+            <input type="text" placeholder="Enter your options" name="options"  [(ngModel)]="options" required #myControl="ngModel">          
             <br/>
             <button type="button" name="add" value="Add" (click)="AddOptions()" [disabled]="myControl.invalid" >Add</button>
           </div>
@@ -50,6 +43,7 @@
           <div class="form-group">
             <input type="reset" id="reset-button" value="Reset"/>
             <input  type="submit" *ngIf="!isEditable" id="submit-button" value="Submit" />
+            
             <input  type="button" *ngIf="isEditable" id="submit-button" value="Update"  (click)="DataUpdate()"/>
          </div> 
    </div>

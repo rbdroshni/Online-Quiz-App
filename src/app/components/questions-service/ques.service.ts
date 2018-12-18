@@ -15,6 +15,7 @@ export class QuesService {
   // _quesList:QuestionType[]=[];
 
   public display:boolean=false;
+  public static quesset:any=[];
   
  
   // selectedQuestionType=new EventEmitter<QuestionType>();
@@ -24,12 +25,15 @@ export class QuesService {
 
 
 
-  // public get quesData() : any {    
-  //   return QuesService.quesData  
-  // }
-  // public set quesData(v : any) {    
-  // QuesService.quesData = v  
-  // }
+  public get quesset() : any {    
+    return QuesService.quesset
+  }
+
+
+
+  public set quesset(v : any) {    
+  QuesService.quesset = v  
+  }
 
  
     addQuestions(_form){
@@ -47,7 +51,6 @@ export class QuesService {
 
 
     editQuestions(form:NgForm){
-    
        console.log("edit is working");
        return this._http.post(`${this.uri}/quizesupdate`, form);
      }

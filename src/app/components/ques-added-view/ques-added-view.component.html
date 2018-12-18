@@ -8,7 +8,7 @@
      <span id="dailog-box">
         <button type="button" style="float:right;" pButton icon="pi pi-close" (click)="quesservice.display=false" label="Yes">close</button>
    
-     <app-ques-entry-form [isEditable]="isEdit" [SelectedOptions]="isOption" [_form]="_form"></app-ques-entry-form>
+     <app-ques-entry-form [isEditable]="isEdit" [SelectedOptions]="isOption" [_form]="_form" [getQues]="quesservice.quesset" ></app-ques-entry-form>
      </span>
  </p-dialog>
  
@@ -29,7 +29,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let qset of quesset,let i=index">
+          <tr *ngFor="let qset of quesservice.quesset,let i=index">
             <td >{{i+1}}</td>
             <td>{{qset.title}}</td>
             <td>{{qset.type}}</td>
@@ -44,7 +44,7 @@
           </tr>
          </td>
             <td><button (click)="showDialog(qset._id,qset)">EDIT</button></td> 
-            <td><button (click)="deleteQuestions(qset._id)">DELETE</button></td>
+            <td><button (click)="deleteQuestions(qset._id,i)">DELETE</button></td>
          </tr>
         </tbody>
       </table>

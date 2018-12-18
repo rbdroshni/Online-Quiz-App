@@ -39,6 +39,7 @@ export class QuesAddedViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("in add comp");
     this.getQuestions();
   }
 
@@ -70,21 +71,24 @@ export class QuesAddedViewComponent implements OnInit {
    }  
 }
 
-getQuestions(){
+getQuestions(index:any){
+  this.quesservice.quesset.push(index);
   this.quesservice.getQuestions()
   .subscribe((questions)=>{
-    this.quesset=questions
-    console.log(questions);
+    this.quesservice.quesset=questions
+    
+    console.log("test add service",this.quesservice.quesset);
   })
 }
 
-  deleteQuestions(id:any) {
+  deleteQuestions(id:any,index:any) {
+    this.quesservice.quesset.splice(index,1);
+    console.log("rload",this.quesset);
     if (confirm('Are you sure to delete this record ?') == true) {
      console.log("delete test",+id);
       this.quesservice.deleteQuestions(id).subscribe(response => {
         console.log(response);
-       
-        location.reload();
+        // location.reload();
       })
     }
   }
