@@ -12,13 +12,10 @@ export class QuesService {
 
   public static quesData:any={};
 
-  // _quesList:QuestionType[]=[];
-
   public display:boolean=false;
   public static quesset:any=[];
   
  
-  // selectedQuestionType=new EventEmitter<QuestionType>();
 
   uri = 'http://localhost:3000';
   constructor(private _http:HttpClient) {}

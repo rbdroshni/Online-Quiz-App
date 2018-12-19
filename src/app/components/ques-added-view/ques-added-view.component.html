@@ -8,7 +8,7 @@
      <span id="dailog-box">
         <button type="button" style="float:right;" pButton icon="pi pi-close" (click)="quesservice.display=false" label="Yes">close</button>
    
-     <app-ques-entry-form [isEditable]="isEdit" [SelectedOptions]="isOption" [_form]="_form" [getQues]="quesservice.quesset" ></app-ques-entry-form>
+     <app-ques-entry-form [isEditable]="isEdit" [SelectedOptions]="isOption" [_form]="_form" [getQues]="quesservice.quesset" (valueChange)="saveQuestions($event)" ></app-ques-entry-form>
      </span>
  </p-dialog>
  

@@ -6,7 +6,6 @@ import {QuesEntryFormComponent} from '../ques-entry-form/ques-entry-form.compone
 import {QuesService} from '../questions-service/ques.service';
 
 
-
 @Component({
   selector: 'app-ques-added-view',
   templateUrl: './ques-added-view.component.html',
@@ -71,8 +70,11 @@ export class QuesAddedViewComponent implements OnInit {
    }  
 }
 
-getQuestions(index:any){
-  this.quesservice.quesset.push(index);
+saveQuestions(event){
+  this.quesservice.quesset.push(event);
+}
+
+getQuestions(){
   this.quesservice.getQuestions()
   .subscribe((questions)=>{
     this.quesservice.quesset=questions
@@ -88,7 +90,7 @@ getQuestions(index:any){
      console.log("delete test",+id);
       this.quesservice.deleteQuestions(id).subscribe(response => {
         console.log(response);
-        // location.reload();
+        
       })
     }
   }

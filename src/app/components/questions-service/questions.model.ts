@@ -5,7 +5,7 @@ export class QuestionType{
     optionsArray:[
         {
         optText:string,
-        isCorrectb:boolean
+        isCorrect:boolean
         }
     ];   
 }

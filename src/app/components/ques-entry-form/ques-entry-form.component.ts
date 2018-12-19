@@ -22,7 +22,8 @@ export class QuesEntryFormComponent implements OnInit {
   @Input() _form:any={};
   @Input() SelectedOptions:Boolean =false
   @Input() isEditable:Boolean =false
-  
+
+  @Output() valueChange=new EventEmitter();
   
   titleBlank:boolean=true;
   isOptionChecked:boolean=true;
@@ -116,8 +117,12 @@ export class QuesEntryFormComponent implements OnInit {
       .subscribe((data) => {
         this.questionService.display=false;
         console.log(data);
-      });
-    
+        this.questionService.getQuestions()
+        .subscribe((questions)=>{
+            this.questionService.quesset=questions
+            console.log("test add service",this.questionService.quesset);
+         })
+      }); 
   }
 
   DeleteOptions(optText){
@@ -194,15 +199,26 @@ export class QuesEntryFormComponent implements OnInit {
     }
       else{
 
-      // this.questionService.quesset.push(this._form);
+      this.valueChange.emit(this._form);
       this.questionService.addQuestions(this._form).subscribe((data)=>{
+        console.log("data", data)
+
+        this.questionService.getQuestions()
+          .subscribe((questions)=>{
+            this.questionService.quesset=questions
+            
+            console.log("test add service",this.questionService.quesset);
+          })
       })
+
+
+
       this.questionService.getQuestions()
       .subscribe((questions)=>{
         console.log("inside service",this.questionService.quesset);
         this.questionService.quesset=questions
         
-        // this.questionService.quesset=[...this.questionService.quesset]
+        
         console.log("inside1121 service",this.questionService.quesset);
         console.log(questions);
       })
