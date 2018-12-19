@@ -24,11 +24,14 @@ export class QuesEntryFormComponent implements OnInit {
   @Input() isEditable:Boolean =false
 
   @Output() valueChange=new EventEmitter();
+
+  CheckboxAllBlank:boolean=false;
   
   titleBlank:boolean=true;
   isOptionChecked:boolean=true;
   EventsHasError = true;
   emptyCheckbox:boolean=false;
+  optionBlank:boolean=false;
 
   options:any="";
   answers:any="";
@@ -36,7 +39,7 @@ export class QuesEntryFormComponent implements OnInit {
   _form2 = {
 
     key: 1,
-    title: '',
+    title:'',
     type:'',
     optionsArray:[
       {
@@ -155,47 +158,58 @@ export class QuesEntryFormComponent implements OnInit {
 
   OnSubmit(form:any,id:any) {
   
-    let count=0;
+    let count=0,count1=0;
    
   for(var i=0;i<this._form.optionsArray.length;i++){
 
    if(this._form.optionsArray[i]["isCorrect"]!=""){
      console.log("options is selected")
      count++;
-    
      }
+    if(this._form.optionsArray[i]["optText"]!=""){
+      console.log("Option is filled");
+      count1++;
+    }
   }
+
+  console.log("count1=",count1);
+
+  if(count1==0){
+    this.optionBlank=true;
+    console.log("option  is empty",this.optionBlank);
+  }
+  else{
+    this.optionBlank=false;
+  }
+
   if(count==0){
     this.emptyCheckbox=true;
     console.log("inside count=0",this.emptyCheckbox);
-  }
-  else{
+  }else{
+
     this.emptyCheckbox=false;
+
   }
+
   console.log("Count=",count);
 
     if(this._form.title==""){
       console.log("inside title")
-      this.titleBlank=false;
-      
+      this.titleBlank=false; 
     }
     else{
-    
     this.titleBlank=true;
-   
     }
 
-    if((!this.titleBlank ) || this.emptyCheckbox){
+    if((!this.optionBlank) && (this.emptyCheckbox)){
+      this.CheckboxAllBlank=true;
+      console.log("checkbox all empty",this.CheckboxAllBlank)
 
+    }
+
+    if((!this.titleBlank ) || (this.emptyCheckbox) || (this.optionBlank)){
+      
      console.log("error in the title");
-    }else{
-
-    if(form['_id']){
-      console.log("inside if",id)
-      this.questionService.editQuestions(form).subscribe((data)=>{
-        console.log("inside edit api",data);
-      })
-
     }
       else{
 
@@ -211,8 +225,6 @@ export class QuesEntryFormComponent implements OnInit {
           })
       })
 
-
-
       this.questionService.getQuestions()
       .subscribe((questions)=>{
         console.log("inside service",this.questionService.quesset);
@@ -222,12 +234,12 @@ export class QuesEntryFormComponent implements OnInit {
         console.log("inside1121 service",this.questionService.quesset);
         console.log(questions);
       })
-      this.router.navigate(['/']);
+      // this.router.navigate(['/']);
+      this.questionService.display=false;
     }
-
-    this.questionService.display=false;
+    
   }
-}
+
   SingleOptions=false;
 
   OnClick(options) {

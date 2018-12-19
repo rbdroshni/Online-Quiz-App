@@ -32,10 +32,12 @@
             <button (click)="DeleteOptions(key.optText)">-</button>
             
           </li>
-          <small *ngIf="emptyCheckbox">At least one answers is required</small>
+          <small *ngIf="CheckboxAllBlank"> Answers is required</small>
       </ol>
+      
           <div>
-            <input type="text" placeholder="Enter your options" name="options"  [(ngModel)]="options" required #myControl="ngModel">          
+            <input type="text" placeholder="Enter your options" name="options"  [(ngModel)]="options" required #myControl="ngModel"> 
+            <small *ngIf="optionBlank">Option is required</small>         
             <br/>
             <button type="button" name="add" value="Add" (click)="AddOptions()" [disabled]="myControl.invalid" >Add</button>
           </div>
