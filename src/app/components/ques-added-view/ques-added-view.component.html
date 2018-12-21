@@ -1,40 +1,35 @@
-
-<h5 > Questions Details</h5>
-
+<h5>Questions Details</h5>
 <div>
-   <button type="text" (click)="showDialog()"  >ADD QUESTIONS</button>
-    
- <p-dialog  [(visible)]="quesservice.display">
-     <span id="dailog-box">
-        <button type="button" style="float:right;" pButton icon="pi pi-close" (click)="quesservice.display=false" label="Yes">close</button>
-   
-     <app-ques-entry-form [isEditable]="isEdit" [SelectedOptions]="isOption" [_form]="_form" [getQues]="quesservice.quesset" (valueChange)="saveQuestions($event)" ></app-ques-entry-form>
-     </span>
- </p-dialog>
- 
+  <button type="text" (click)="showDialog()">ADD QUESTIONS</button>
+  <p-dialog [(visible)]="quesservice.display">
+    <span id="dailog-box">
+      <button type="button" style="float:right;" pButton icon="pi pi-close" (click)="quesservice.display=false" label="Yes">close</button>
+      <app-ques-entry-form [isEditable]="isEdit" [SelectedOptions]="isOption" [_form]="_form" ></app-ques-entry-form>
+    </span>
+  </p-dialog>
 </div>
 <br>
 
 <div class="container">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Type</th>
-            <th>Options</th>
-            <th>Answers</th>
-            <th>Actions</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
+	<table class="table">
+    <thead>
+			<tr>
+				<th>ID</th>
+				<th>Title</th>
+				<th>Type</th>
+				<th>Options</th>
+				<th>Answers</th>
+				<th>Actions</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
         <tbody>
-          <tr *ngFor="let qset of quesservice.quesset,let i=index">
+          <tr *ngFor="let qset of quesservice.quesset, let i=index">
             <td >{{i+1}}</td>
             <td>{{qset.title}}</td>
             <td>{{qset.type}}</td>
             <td>
-              <tr *ngFor="let options of qset.optionsArray,let i=index ">
+              <tr *ngFor="let options of qset.optionsArray, let i=index ">
                  <td>{{i+1}}.{{options.optText}}</td>
              </tr>
            </td>
@@ -43,7 +38,7 @@
            <td *ngIf="options.isCorrect" >{{options.optText}}</td>
           </tr>
          </td>
-            <td><button (click)="showDialog(qset._id,qset)">EDIT</button></td> 
+            <td><button (click)="showDialog(qset._id, qset)">EDIT</button></td> 
             <td><button (click)="deleteQuestions(qset._id,i)">DELETE</button></td>
          </tr>
         </tbody>

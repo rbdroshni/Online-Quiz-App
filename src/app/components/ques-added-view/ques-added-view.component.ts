@@ -1,98 +1,65 @@
 import { Component, OnInit } from '@angular/core';
-import {RouterModule,Routes} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
-import {NgForm} from '@angular/forms'
-import {QuesEntryFormComponent} from '../ques-entry-form/ques-entry-form.component';
-import {QuesService} from '../questions-service/ques.service';
-
+import { RouterModule, Routes } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { NgForm } from '@angular/forms'
+import { QuesEntryFormComponent } from '../ques-entry-form/ques-entry-form.component';
+import { QuesService } from '../questions-service/ques.service';
 
 @Component({
-  selector: 'app-ques-added-view',
-  templateUrl: './ques-added-view.component.html',
-  styleUrls: ['./ques-added-view.component.css']
+	selector: 'app-ques-added-view',
+	templateUrl: './ques-added-view.component.html',
+	styleUrls: ['./ques-added-view.component.css']
 })
 
 export class QuesAddedViewComponent implements OnInit {
-  
-  quesset:any=[];
-  display: boolean = false;
-  isOption:boolean =false;
-  isEdit = false
-  _form :any= {
-    key: 0,
-    title: '',
-    type:'',
-    optionsArray:[
-      {
-        optText:'',
-        isCorrect:''
-      }
-    ]
-  }
+	quesset: any = [];
+	display: boolean = false;
+	isOption: boolean = false;
+	isEdit = false;
+	_form: any = {
+		title: '',
+		type: '',
+		optionsArray: [
+			{
+				optText: '',
+				isCorrect: ''
+			}
+		]
+	}
+	_id: any;
 
-  id:any;
-  constructor(public quesservice:QuesService ) {
-    this.quesset=[];
-    this._form;
-    
-  }
+	constructor(public quesservice: QuesService) {
+	}
 
-  ngOnInit() {
-    console.log("in add comp");
-    this.getQuestions();
-  }
+	ngOnInit() {
+		this.getQuestions();
+	}
 
-  showDialog(id?:any,_form?:any) {
-  
-    if(id){
-      this.isEdit = true
-      this._form =_form
-      this.isOption = true
+	showDialog(_id?: any, _form?: any) {
+		if (!_id) {
+			this.isOption = false;
+		} else {
+			this.isEdit = true
+			this.isOption = true
+			this.quesservice.getQuestionsById(_id).subscribe((ques) => {
+				this._form = ques;
+			})
+		}
+		this.quesservice.display = true;
+	}
 
-      this.quesservice.getQuestionsById(id)
-      .subscribe((ques)=>{
-        this._form=ques;
-       
-      })
-      this.quesservice.display = true; 
-    }
-   else{ 
-    this.isOption = false
-    this._form ={
-      key: 1,
-      title: '',
-      type:'',
-      optionsArray:[
-      ]
-}
+	getQuestions() {
+		this.quesservice.getQuestions().subscribe((questions) => {
+			this.quesservice.quesset = questions;
+		})
+	}
 
-     this.quesservice.display=true;
-   }  
-}
-
-saveQuestions(event){
-  this.quesservice.quesset.push(event);
-}
-
-getQuestions(){
-  this.quesservice.getQuestions()
-  .subscribe((questions)=>{
-    this.quesservice.quesset=questions
-    
-    console.log("test add service",this.quesservice.quesset);
-  })
-}
-
-  deleteQuestions(id:any,index:any) {
-    this.quesservice.quesset.splice(index,1);
-    console.log("rload",this.quesset);
-    if (confirm('Are you sure to delete this record ?') == true) {
-     console.log("delete test",+id);
-      this.quesservice.deleteQuestions(id).subscribe(response => {
-        console.log(response);
-        
-      })
-    }
-  }
-
+	deleteQuestions(_id: any, index: any) {
+		this.quesservice.quesset.splice(index, 1);
+		if (confirm('Are you sure to delete this record ?') == true) {
+			this.quesservice.deleteQuestions(_id).subscribe(response => {
+				console.log(response);
+			})
+		}
+	}
 }
