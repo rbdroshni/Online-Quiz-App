@@ -14,8 +14,6 @@ import { QuesAddedViewComponent } from '../ques-added-view/ques-added-view.compo
 	styleUrls: ['./ques-entry-form.component.css']
 })
 export class QuesEntryFormComponent implements OnInit {
-
-	AnotherSelectedOption: Boolean = false;
 	QuesType: any = [];
 	@Input() _form: any = {};
 	@Input() SelectedOptions: Boolean = false
@@ -28,6 +26,7 @@ export class QuesEntryFormComponent implements OnInit {
 	SingleOptions: boolean = false;
 	options: any = "";
 	answers: any = "";
+
 	constructor(public router: Router, public questionService: QuesService) {
 		this.QuesType = [
 			{
@@ -56,17 +55,16 @@ export class QuesEntryFormComponent implements OnInit {
 	}
 
 	forSingle(id) {
-
 		for (var i = 0; i < this._form.optionsArray.length; i++) {
 			let x = "" + i;
 			let a = document.getElementById(x);
 			a['checked'] = false;
 			this._form.optionsArray[i].isCorrect = false;
 		}
-		let y = "" + id;
-		let b = document.getElementById(y);
-		b['checked'] = true;
-		this._form.optionsArray[id].isCorrect = true;
+			let y = "" + id;
+			let b = document.getElementById(y);
+			b['checked'] = true;
+			this._form.optionsArray[id].isCorrect = true;
 	}
 
 	optionChecked(value: any, data) {
@@ -74,8 +72,7 @@ export class QuesEntryFormComponent implements OnInit {
 		if (value) {
 			index = this._form.optionsArray.findIndex(x => { return x.optText == data })
 			this._form.optionsArray[index] = { optText: data, isCorrect: value }
-		}
-		else {
+		}else {
 			index = this._form.optionsArray.findIndex(x => { return x.optText == data })
 			this._form.optionsArray[index] = { optText: data, isCorrect: value }
 		}
@@ -109,13 +106,10 @@ export class QuesEntryFormComponent implements OnInit {
 		this.titleBlank = (this._form.title == "") ? false : true;
 		this.CheckboxAllBlank = ((!this.optionBlank) && (this.emptyCheckbox)) ? true : false;
 		return true;
-
 	}
 
 	OnSubmit(form: any, _id: any) {
-
 		if (!((!this.titleBlank) || (this.emptyCheckbox) || (this.optionBlank))) {
-			console.log("form id", _id);
 			if (!_id) {
 				this.questionService.addQuestions(this._form).subscribe((data) => {
 					this.questionService.getQuestions().subscribe((questions) => {

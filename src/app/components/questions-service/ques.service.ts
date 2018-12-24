@@ -2,58 +2,45 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
-import { QuestionType } from './questions.model';
-// import { QuestionType } from './questions.model'
+import { environment } from '.././.././../environments/environment'
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuesService {
 
-  public static quesData: any = {};
-
   public display: boolean = false;
   public static quesset: any = [];
 
-
-
-  uri = 'http://localhost:3000';
+  baseUrl = environment.baseUrl;
   constructor(private _http: HttpClient) { }
-
-
 
   public get quesset(): any {
     return QuesService.quesset
   }
 
-
-
   public set quesset(v: any) {
     QuesService.quesset = v
   }
 
-
   addQuestions(_form) {
-    console.log("post is working", _form);
-    return this._http.post(`${this.uri}/quizes`, _form);
+    return this._http.post(`${this.baseUrl}/quizes`, _form);
   }
 
   getQuestions() {
-    return this._http.get(`${this.uri}/quizes`)
+    return this._http.get(`${this.baseUrl}/quizes`)
   }
 
   getQuestionsById(id: any) {
-    return this._http.get(`${this.uri}/quizes/${id}`);
+    return this._http.get(`${this.baseUrl}/quizes/${id}`);
   }
 
-
   editQuestions(form: NgForm) {
-    console.log("edit is working");
-    return this._http.post(`${this.uri}/quizesupdate`, form);
+    return this._http.post(`${this.baseUrl}/quizesupdate`, form);
   }
 
   deleteQuestions(_id: any) {
     console.log("delete is working", _id)
-    return this._http.delete(`${this.uri}/quizes/${_id}`);
+    return this._http.delete(`${this.baseUrl}/quizes/${_id}`);
   }
 }
