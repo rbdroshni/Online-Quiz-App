@@ -4,10 +4,8 @@ import { NgForm } from '@angular/forms';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 import { QuesService } from '../questions-service/ques.service';
 import { Router, RouterLink } from '@angular/router';
-import { Options } from 'selenium-webdriver/ie';
 import { QuesAddedViewComponent } from '../ques-added-view/ques-added-view.component';
-import { QType } from '../../questypelist'
-import { QuesType } from '../../questype';
+import { QType } from '../../codeConstants'
 
 @Component({
 	selector: 'app-ques-entry-form',
@@ -98,8 +96,10 @@ export class QuesEntryFormComponent implements OnInit {
 	OnSubmit(form: any, _id: any) {
 		if (!((!this.titleBlank) || (this.emptyCheckbox) || (this.optionBlank))) {
 		let api = (!_id) ? this.questionService.addQuestions(this.questionForm) : this.questionService.editQuestions(this.questionForm)
-			api.subscribe((data) => {
-				this.getQuestions();
+			api.subscribe((response) => {
+				if(response){
+					this.getQuestions();
+				}
 			})
 			this.questionService.display = false;
 		}

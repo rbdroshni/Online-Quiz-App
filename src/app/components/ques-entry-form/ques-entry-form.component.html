@@ -11,8 +11,8 @@
       <label>Question Type:</label>
       <select (change)=OnClick($event.target.value) placeholder="Select Options" name="type" [(ngModel)]="questionForm.type">
         <option value="default">Select Question Type</option>
-        <option *ngFor="let type of QuestionType;let i=index" [value]="type.Name">
-          {{type.Name}}
+        <option *ngFor="let type of QuestionType;let i=index" [value]="type.name">
+          {{type.name}}
         </option>
       </select>
     </div>
