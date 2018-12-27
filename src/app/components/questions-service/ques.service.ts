@@ -10,17 +10,17 @@ import { environment } from '.././.././../environments/environment'
 export class QuesService {
 
   public display: boolean = false;
-  public static quesset: any = [];
+  public static quesSet: any = [];
 
   baseUrl = environment.baseUrl;
   constructor(private _http: HttpClient) { }
 
-  public get quesset(): any {
-    return QuesService.quesset
+  public get quesSet(): any {
+    return QuesService.quesSet
   }
 
-  public set quesset(v: any) {
-    QuesService.quesset = v
+  public set quesSet(v: any) {
+    QuesService.quesSet = v
   }
 
   addQuestions(_form) {
@@ -40,7 +40,6 @@ export class QuesService {
   }
 
   deleteQuestions(_id: any) {
-    console.log("delete is working", _id)
     return this._http.delete(`${this.baseUrl}/quizes/${_id}`);
   }
 }

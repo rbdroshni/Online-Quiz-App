@@ -4,9 +4,10 @@ import { NgForm } from '@angular/forms';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 import { QuesService } from '../questions-service/ques.service';
 import { Router, RouterLink } from '@angular/router';
-
 import { Options } from 'selenium-webdriver/ie';
-import { QuesAddedViewComponent } from '../ques-added-view/ques-added-view.component'
+import { QuesAddedViewComponent } from '../ques-added-view/ques-added-view.component';
+import { QType } from '../../questypelist'
+import { QuesType } from '../../questype';
 
 @Component({
 	selector: 'app-ques-entry-form',
@@ -14,8 +15,8 @@ import { QuesAddedViewComponent } from '../ques-added-view/ques-added-view.compo
 	styleUrls: ['./ques-entry-form.component.css']
 })
 export class QuesEntryFormComponent implements OnInit {
-	QuesType: any = [];
-	@Input() _form: any = {};
+	QuestionType = QType;
+	@Input() questionForm: any = {};
 	@Input() SelectedOptions: Boolean = false
 	@Input() isEditable: Boolean = false;
 	CheckboxAllBlank: boolean = false;
@@ -25,85 +26,71 @@ export class QuesEntryFormComponent implements OnInit {
 	optionBlank: boolean = false;
 	SingleOptions: boolean = false;
 	options: any = "";
-	answers: any = "";
 
 	constructor(public router: Router, public questionService: QuesService) {
-		this.QuesType = [
-			{
-				"id": "1",
-				"name": "Single Options"
-			},
-			{
-				"id": "2",
-				"name": "Multiple Options"
-			},
-			{
-				"id": "3",
-				"name": "input text"
-			}
-		]
 	}
 
 	ngOnInit() {
-
-		this._form.optionsArray = [];
+		this.questionForm.optionsArray = [];
 	}
 
 	addOptions() {
-		this._form.optionsArray.push({ optText: this.options, isCorrect: false });
+		this.questionForm.optionsArray.push({ optText: this.options, isCorrect: false });
 		this.options = "";
 	}
 
-	forSingle(id) {
-		for (var i = 0; i < this._form.optionsArray.length; i++) {
-			let x = "" + i;
-			let a = document.getElementById(x);
-			a['checked'] = false;
-			this._form.optionsArray[i].isCorrect = false;
+	singleAnsChecked(id) {
+		for (var i = 0; i < this.questionForm.optionsArray.length; i++) {
+			let check_boxes_false = "" + i;
+			let check_fasle = document.getElementById(check_boxes_false);
+			check_fasle['checked'] = false;
+			this.questionForm.optionsArray[i].isCorrect = false;
 		}
-			let y = "" + id;
-			let b = document.getElementById(y);
-			b['checked'] = true;
-			this._form.optionsArray[id].isCorrect = true;
+		let check_box_true = "" + id;
+		let check_true = document.getElementById(check_box_true);
+		check_true['checked'] = true;
+		this.questionForm.optionsArray[id].isCorrect = true;
 	}
 
-	optionChecked(value: any, data) {
+	multiAnsChecked(checked: any, optionValue) {
 		let index;
-		if (value) {
-			index = this._form.optionsArray.findIndex(x => { return x.optText == data })
-			this._form.optionsArray[index] = { optText: data, isCorrect: value }
-		}else {
-			index = this._form.optionsArray.findIndex(x => { return x.optText == data })
-			this._form.optionsArray[index] = { optText: data, isCorrect: value }
-		}
+		if (checked) {
+			index = this.questionForm.optionsArray.findIndex(x => {
+				return x.optText == optionValue;
+			})
+			this.questionForm.optionsArray[index] = { 
+				optText: optionValue, 
+				isCorrect: checked 
+			}
+		} 
 	}
 
-	DeleteOptions(optText) {
-		for (var i = 0; i < this._form.optionsArray.length; i++) {
-			if (this._form.optionsArray[i]["optText"] == optText) {
-				this._form.optionsArray.splice(i, 1);
+	deleteOptions(optText) {
+		for (var i = 0; i < this.questionForm.optionsArray.length; i++) {
+			if (this.questionForm.optionsArray[i]["optText"] == optText) {
+				this.questionForm.optionsArray.splice(i, 1);
 			}
 		}
 	}
 
 	resetForm(form?: NgForm) {
 		if (form != null)
-			this._form = null
+			this.questionForm = null
 	}
 
 	validateForm(form: any, id: any) {
-		let count = 0, count1 = 0;
-		for (var i = 0; i < this._form.optionsArray.length; i++) {
-			if (this._form.optionsArray[i]["isCorrect"] != "") {
-				count++;
+		let checkedCount = 0, optionsCount = 0;
+		for (var i = 0; i < this.questionForm.optionsArray.length; i++) {
+			if (this.questionForm.optionsArray[i]["isCorrect"] != "") {
+				checkedCount++;
 			}
-			if (this._form.optionsArray[i]["optText"] != "") {
-				count1++;
+			if (this.questionForm.optionsArray[i]["optText"] != "") {
+				optionsCount++;
 			}
 		}
-		this.optionBlank = (count1 == 0) ? true : false;
-		this.emptyCheckbox = (count == 0) ? true : false;
-		this.titleBlank = (this._form.title == "") ? false : true;
+		this.optionBlank = (optionsCount == 0) ? true : false;
+		this.emptyCheckbox = (checkedCount == 0) ? true : false;
+		this.titleBlank = (this.questionForm.title == "") ? false : true;
 		this.CheckboxAllBlank = ((!this.optionBlank) && (this.emptyCheckbox)) ? true : false;
 		return true;
 	}
@@ -111,29 +98,30 @@ export class QuesEntryFormComponent implements OnInit {
 	OnSubmit(form: any, _id: any) {
 		if (!((!this.titleBlank) || (this.emptyCheckbox) || (this.optionBlank))) {
 			if (!_id) {
-				this.questionService.addQuestions(this._form).subscribe((data) => {
-					this.questionService.getQuestions().subscribe((questions) => {
-						this.questionService.quesset = questions;
-					})
+				this.questionService.addQuestions(this.questionForm).subscribe((data) => {
+					this.getQuestions();
 				})
-
 			} else {
-				this.questionService.editQuestions(this._form).subscribe((data) => {
-					this.questionService.getQuestions().subscribe((questions) => {
-						this.questionService.quesset = questions;
-					})
+				this.questionService.editQuestions(this.questionForm).subscribe((data) => {
+					this.getQuestions();
 				});
 			}
 			this.questionService.display = false;
 		}
 	}
 
-	OnClick(options) {
-		this.SingleOptions = (options == "Single Options") ? true : false;
-		if ((options == "Single Options") || (options == "Multiple Options")) {
+	getQuestions(){
+		this.questionService.getQuestions().subscribe((questions) => {
+			this.questionService.quesSet = questions;
+		})	
+	}
+
+	OnClick(ansType) {
+		this.SingleOptions = (ansType == "Single Options") ? true : false;
+		if ((ansType == "Single Options") || (ansType == "Multiple Options")) {
 			this.SelectedOptions = true;
 		}
-		else if (options == "input text") {
+		else if (ansType == "input text") {
 			this.SelectedOptions = false;
 		}
 	}

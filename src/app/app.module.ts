@@ -15,7 +15,6 @@ import { QuesAddedViewComponent } from './components/ques-added-view/ques-added-
 export const routes:Routes =[
   {path:'',component:QuesAddedViewComponent},
   {path:'ques-entry-form',component:QuesEntryFormComponent},
-
 ]
 
 
@@ -35,27 +34,14 @@ export const routes:Routes =[
    DialogModule,
    BrowserAnimationsModule,
    CommonModule,
-   
-   RouterModule.forRoot(routes)
-  //  MatInputModule,
-  //  MatCardModule,
-  //  MatIconModule,
-  //  MatToolbarModule,
-  //  MatDialogModule,
-  //  MatDialogRef,
-  //  MatDialog  
+   RouterModule.forRoot(routes) 
   ],
   exports:[
     FormsModule,
     ReactiveFormsModule
   ],
   providers: [
-    // QuesService,QuestionsListComponent,
-    // { provide: MatDialog, useValue: {} },
-    // { provide: MatDialogRef, useValue: {} },
-	// { provide: MAT_DIALOG_DATA, useValue: [] },
   ],
-  // entryComponents:[QuesFormComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

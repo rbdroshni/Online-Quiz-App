@@ -12,11 +12,11 @@ import { QuesService } from '../questions-service/ques.service';
 })
 
 export class QuesAddedViewComponent implements OnInit {
-	quesset: any = [];
+	quesSet: any = [];
 	display: boolean = false;
 	isOption: boolean = false;
 	isEdit = false;
-	_form: any = {
+	questionForm: any = {
 		title: '',
 		type: '',
 		optionsArray: [
@@ -35,14 +35,14 @@ export class QuesAddedViewComponent implements OnInit {
 		this.getQuestions();
 	}
 
-	showDialog(_id?: any, _form?: any) {
+	showDialog(_id?: any, questionForm?: any) {
 		if (!_id) {
 			this.isOption = false;
 		} else {
 			this.isEdit = true
 			this.isOption = true
 			this.quesservice.getQuestionsById(_id).subscribe((ques) => {
-				this._form = ques;
+				this.questionForm = ques;
 			})
 		}
 		this.quesservice.display = true;
@@ -50,15 +50,14 @@ export class QuesAddedViewComponent implements OnInit {
 
 	getQuestions() {
 		this.quesservice.getQuestions().subscribe((questions) => {
-			this.quesservice.quesset = questions;
+			this.quesservice.quesSet = questions;
 		})
 	}
 
 	deleteQuestions(_id: any, index: any) {
-		this.quesservice.quesset.splice(index, 1);
+		this.quesservice.quesSet.splice(index, 1);
 		if (confirm('Are you sure to delete this record ?') == true) {
 			this.quesservice.deleteQuestions(_id).subscribe(response => {
-				console.log(response);
 			})
 		}
 	}
