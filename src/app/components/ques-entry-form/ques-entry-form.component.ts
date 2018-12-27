@@ -75,7 +75,7 @@ export class QuesEntryFormComponent implements OnInit {
 
 	resetForm(form?: NgForm) {
 		if (form != null)
-			this.questionForm = null
+			this.questionForm = null;
 	}
 
 	validateForm(form: any, id: any) {
@@ -97,15 +97,10 @@ export class QuesEntryFormComponent implements OnInit {
 
 	OnSubmit(form: any, _id: any) {
 		if (!((!this.titleBlank) || (this.emptyCheckbox) || (this.optionBlank))) {
-			if (!_id) {
-				this.questionService.addQuestions(this.questionForm).subscribe((data) => {
-					this.getQuestions();
-				})
-			} else {
-				this.questionService.editQuestions(this.questionForm).subscribe((data) => {
-					this.getQuestions();
-				});
-			}
+		let api = (!_id) ? this.questionService.addQuestions(this.questionForm) : this.questionService.editQuestions(this.questionForm)
+			api.subscribe((data) => {
+				this.getQuestions();
+			})
 			this.questionService.display = false;
 		}
 	}

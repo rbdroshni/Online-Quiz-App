@@ -59,6 +59,4 @@ export class QuesAddedViewComponent implements OnInit {
 		if (confirm('Are you sure to delete this record ?') == true) {
 			this.quesservice.deleteQuestions(_id).subscribe(response => {
 			})
-		}
-	}
-}
+		}}}
